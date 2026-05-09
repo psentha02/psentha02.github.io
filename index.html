@@ -209,8 +209,6 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
           reply = data.reply;
         } else if (data.error === 'rate_limited') {
           reply = "You've sent a lot of messages — give it a minute and try again.";
-        } else if (data.error === 'warming_up') {
-          reply = "I'm warming up — give me about 30 seconds and try again.";
         } else {
           reply = "Hmm, something went wrong on my end. Try again, or reach Praveen directly at praveen.sentha@gmail.com.";
         }
