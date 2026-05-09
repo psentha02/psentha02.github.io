@@ -504,7 +504,7 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
                     border: `1px solid ${palette.theme === 'dark' ? (isUser ? 'rgba(255,255,255,0.14)' : 'rgba(255,255,255,0.08)') : palette.border}`,
                     color: palette.fg,
                   }}>
-                    {m.pending ? <TypingDots accent={palette.muted} /> : m.content}
+                    {m.pending ? <TypingDots accent={palette.muted} /> : <BubbleContent content={m.content} accent={palette.accent} />}
                   </div>
                 </div>
               );
@@ -1220,6 +1220,49 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
       </div>
     </div>
   );
+
+  // Renders **bold** and - bullet lines from assistant messages
+  const inlineParse = (text) => {
+    const parts = text.split(/\*\*(.*?)\*\*/g);
+    if (parts.length === 1) return text;
+    return parts.map((part, i) =>
+      i % 2 === 1 ? <strong key={i} style={{ fontWeight: 600 }}>{part}</strong> : part
+    );
+  };
+
+  const BubbleContent = ({ content, accent }) => {
+    const paragraphs = content.trim().split(/\n\n+/);
+    return (
+      <div>
+        {paragraphs.map((para, pi) => {
+          const lines = para.trim().split('\n');
+          const isList = lines.length >= 1 && lines.every(l => /^[-•]\s/.test(l.trim()));
+          if (isList) {
+            return (
+              <ul key={pi} style={{ margin: pi > 0 ? '10px 0 0' : 0, padding: 0, listStyle: 'none' }}>
+                {lines.map((line, li) => (
+                  <li key={li} style={{ display: 'flex', gap: 8, marginBottom: li < lines.length - 1 ? 5 : 0 }}>
+                    <span style={{ color: accent, flexShrink: 0, fontSize: 11, marginTop: 4 }}>▸</span>
+                    <span style={{ lineHeight: 1.65 }}>{inlineParse(line.replace(/^[-•]\s*/, ''))}</span>
+                  </li>
+                ))}
+              </ul>
+            );
+          }
+          return (
+            <p key={pi} style={{ margin: pi > 0 ? '10px 0 0' : 0, lineHeight: 1.75 }}>
+              {lines.map((line, li) => (
+                <React.Fragment key={li}>
+                  {inlineParse(line)}
+                  {li < lines.length - 1 && <br />}
+                </React.Fragment>
+              ))}
+            </p>
+          );
+        })}
+      </div>
+    );
+  };
 
   const TypingDots = ({ accent }) => (
     <span style={{ display: 'inline-flex', gap: 4, alignItems: 'center', padding: '4px 0' }}>
