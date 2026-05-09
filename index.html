@@ -851,81 +851,54 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
     </h2>
   );
 
-  const AboutLabel = ({ children, palette }) => (
-    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase', color: palette.muted, marginBottom: 16 }}>{children}</div>
+  const AboutSectionLabel = ({ children, palette }) => (
+    <h3 style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: palette.muted, margin: '36px 0 16px', borderBottom: `1px solid ${palette.border}`, paddingBottom: 10 }}>{children}</h3>
   );
 
   const AboutDetail = ({ data, palette, fonts }) => (
     <div style={{ WebkitFontSmoothing: 'antialiased', marginTop: 32 }}>
 
-      {/* Positioning headline */}
-      <p style={{ fontFamily: fonts.display, fontSize: 26, fontWeight: 600, lineHeight: 1.35, letterSpacing: '-0.01em', color: palette.fg, margin: '0 0 28px' }}>
-        Infrastructure engineer who ships LLM agents — not just prototypes.
-      </p>
+      <SectionH font={fonts.display}>About Me</SectionH>
 
-      {/* Bio paragraphs */}
       {(data.about.paragraphs || []).map((p, i) => (
-        <p key={i} style={{ fontSize: 15, lineHeight: 1.85, color: palette.fg, opacity: 0.84, margin: '0 0 18px' }}>{p}</p>
+        <p key={i} style={{ fontSize: 16, lineHeight: 1.78, color: palette.fg, opacity: 0.85, margin: '0 0 18px' }}>{p}</p>
       ))}
 
-      {/* Currently */}
-      <div style={{ margin: '36px 0', padding: '20px 24px', background: palette.surface, border: `1px solid ${palette.border}`, borderLeft: `3px solid ${palette.accent}`, borderRadius: 12 }}>
-        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase', color: palette.accent, marginBottom: 14 }}>Currently</div>
-        {(data.about.currently || []).map((item, i) => (
-          <div key={i} style={{ display: 'flex', gap: 12, marginBottom: i < data.about.currently.length - 1 ? 11 : 0, alignItems: 'flex-start' }}>
-            <span style={{ color: palette.accent, flexShrink: 0, marginTop: 1 }}>→</span>
-            <span style={{ fontSize: 14, color: palette.fg, opacity: 0.85, lineHeight: 1.5 }}>{item}</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Education */}
-      <div style={{ marginBottom: 36 }}>
-        <AboutLabel palette={palette}>Education</AboutLabel>
-        {data.education.map((e, i) => (
-          <div key={i} style={{ display: 'flex', gap: 16, marginBottom: 18, alignItems: 'flex-start' }}>
-            <div style={{ width: 46, height: 46, borderRadius: 12, flexShrink: 0, background: `${palette.accent}18`, border: `1px solid ${palette.accent}30`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, color: palette.accent }}>
-              {e.school.split(' ').map(w => w[0]).join('').slice(0, 2)}
-            </div>
-            <div>
-              <div style={{ fontSize: 15, fontWeight: 600, color: palette.fg, marginBottom: 3 }}>{e.school}</div>
-              <div style={{ fontSize: 13, color: palette.muted }}>{e.degree}</div>
-              <div style={{ fontSize: 12, color: palette.muted, opacity: 0.65, marginTop: 2 }}>{e.dates}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Interests */}
-      <div style={{ marginBottom: 36 }}>
-        <AboutLabel palette={palette}>Interests</AboutLabel>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-          {(data.about.interests || []).map((item, i) => (
-            <span key={i} style={{ fontSize: 13, padding: '7px 16px', borderRadius: 999, background: palette.surface, border: `1px solid ${palette.border}`, color: palette.softer }}>{item}</span>
-          ))}
-        </div>
-      </div>
-
-      {/* Quick facts */}
-      <div style={{ marginBottom: 36, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+      <AboutSectionLabel palette={palette}>Details</AboutSectionLabel>
+      <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
         {[
-          { label: 'Location', value: data.location },
+          { label: 'Location',    value: data.location },
+          { label: 'Email',       value: data.email },
           { label: 'Citizenship', value: data.citizenship },
-          { label: 'Email', value: data.email },
-          { label: 'Honors', value: 'Eagle Scout · Varsity Tennis Captain' },
+          { label: 'Honors',      value: 'Eagle Scout · Varsity Tennis Captain' },
         ].map(({ label, value }) => (
-          <div key={label} style={{ padding: '14px 16px', background: palette.surface, border: `1px solid ${palette.border}`, borderRadius: 10 }}>
-            <div style={{ fontSize: 11, color: palette.muted, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 4 }}>{label}</div>
-            <div style={{ fontSize: 13, color: palette.fg, opacity: 0.85 }}>{value}</div>
-          </div>
+          <li key={label} style={{ display: 'flex', gap: 16, padding: '9px 0', borderBottom: `1px solid ${palette.border}`, fontSize: 14 }}>
+            <span style={{ color: palette.muted, width: 100, flexShrink: 0 }}>{label}</span>
+            <span style={{ color: palette.fg, opacity: 0.85 }}>{value}</span>
+          </li>
+        ))}
+      </ul>
+
+      <AboutSectionLabel palette={palette}>Education</AboutSectionLabel>
+      {data.education.map((e, i) => (
+        <div key={i} style={{ marginBottom: 22 }}>
+          <div style={{ fontSize: 16, fontWeight: 600, color: palette.fg }}>{e.school}</div>
+          <div style={{ fontSize: 14, color: palette.muted, marginTop: 4 }}>{e.degree}</div>
+          <div style={{ fontSize: 13, color: palette.muted, opacity: 0.65, marginTop: 3 }}>{e.dates}</div>
+        </div>
+      ))}
+
+      <AboutSectionLabel palette={palette}>Interests</AboutSectionLabel>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+        {(data.about.interests || []).map((item, i) => (
+          <span key={i} style={{ fontSize: 13, padding: '6px 14px', borderRadius: 999, background: palette.surface, border: `1px solid ${palette.border}`, color: palette.softer }}>{item}</span>
         ))}
       </div>
 
-      {/* Tech Stack */}
-      <AboutLabel palette={palette}>Tech Stack</AboutLabel>
+      <AboutSectionLabel palette={palette}>Tech Stack</AboutSectionLabel>
       {Object.entries(data.skills).map(([k, v]) => (
-        <div key={k} style={{ marginBottom: 14 }}>
-          <div style={{ fontSize: 12, color: palette.accent, marginBottom: 7, fontWeight: 500 }}>{k}</div>
+        <div key={k} style={{ marginBottom: 16 }}>
+          <div style={{ fontSize: 12, color: palette.accent, marginBottom: 8, fontWeight: 600 }}>{k}</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
             {v.map((s, i) => (
               <span key={i} style={{ fontSize: 12, padding: '4px 10px', borderRadius: 999, background: palette.bg, border: `1px solid ${palette.border}`, color: palette.softer }}>{s}</span>
@@ -933,6 +906,7 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
           </div>
         </div>
       ))}
+
     </div>
   );
 
