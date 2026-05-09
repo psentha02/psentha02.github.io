@@ -3,8 +3,7 @@
 Personal portfolio site for Praveen Sentha. Dark constellation theme with a live AI chat
 (PravGPT) that answers questions about Praveen's background, experience, and projects.
 
-**Live site**: https://psentha02.github.io (served from the `main` branch)
-**Current development branch**: `redesign-constellation`
+**Live site**: https://psentha02.github.io (served from `main`)
 
 ---
 
@@ -15,7 +14,7 @@ psentha02.github.io/
 ├── index.html          # The entire site — one self-contained file
 ├── Sentha_Family_2.jpg # Profile photo used in the About card
 ├── worker/             # Cloudflare Worker — PravGPT backend
-│   ├── src/index.js    # Worker source (knowledge base + Groq proxy)
+│   ├── src/index.js    # Knowledge base, system prompt, Groq proxy
 │   └── wrangler.toml   # Cloudflare config
 └── README.md
 ```
@@ -28,18 +27,19 @@ The portfolio is a **single HTML file** with no build step. It uses:
 
 - **React 18** and **ReactDOM** via CDN (`unpkg.com`)
 - **Babel Standalone** for in-browser JSX transpilation
-- **Google Fonts** (Playfair Display, Fraunces, Newsreader, Inter, DM Sans, JetBrains Mono)
+- **Google Fonts** (Playfair Display, Inter, and others)
 
 All component logic, styles, and data live in `index.html` as inline `<script type="text/babel">` blocks. There is no bundler, no `package.json`, and no compilation step — the browser handles everything.
 
-### Key sections inside `index.html`
+### Key blocks inside `index.html`
 
 | Block | Purpose |
 |---|---|
-| `window.PORTFOLIO_DATA` | JSON object with all of Praveen's data (experience, projects, skills, etc.) |
-| `PRAVGPT_SYSTEM_PROMPT` | System prompt for the chat — interpolates `PORTFOLIO_DATA` |
-| `window.usePravGPT` | React hook that manages chat state and calls the Worker |
-| `window.VarA` | Main app component (routing, panels, chat, theme toggle) |
+| `window.PORTFOLIO_DATA` | All of Praveen's data — experience, projects, skills, education, contact |
+| `PRAVGPT_ENDPOINT` | Hardcoded URL of the Cloudflare Worker |
+| `window.usePravGPT` | React hook — manages chat state, calls the Worker, handles errors |
+| `BubbleContent` | Renders assistant replies with **bold**, paragraph breaks, and `- bullet` lists |
+| `window.VarA` | Main app component — routing, panels, chat mode, theme toggle |
 | Entry point | `ReactDOM.createRoot(...).render(...)` at the bottom |
 
 ### Routing
@@ -48,7 +48,14 @@ Hash-based (`#/about`, `#/work`, `#/projects`, `#/contact`). Page state lives in
 
 ### Theme
 
-Dark/light mode is controlled by the dangling pendant orb (top-right). State lives in `VarA`. Palette is selected at render time — all colors flow through a `palette` object; no hardcoded rgba values.
+Dark/light mode toggled by the dangling pendant orb (top-right corner). State lives in `VarA`. All colors flow through a `palette` object — no hardcoded colour values in components.
+
+### Chat response rendering
+
+`BubbleContent` parses assistant messages before rendering:
+- `**text**` → `<strong>` (bold)
+- Blank lines between paragraphs → visual breathing room
+- Lines starting with `- ` → styled bullet list with accent markers
 
 ---
 
@@ -58,43 +65,51 @@ Dark/light mode is controlled by the dangling pendant orb (top-right). State liv
 Browser → Cloudflare Worker → Groq API (llama-3.3-70b-versatile)
 ```
 
-1. The user types a message. `usePravGPT` sends a `POST` to the Worker with the full conversation as a `messages` array.
+1. The user types a message. `usePravGPT` sends `POST /chat` to the Worker with the conversation history as a `messages` array.
 2. The **Cloudflare Worker** (`worker/src/index.js`):
-   - Validates the `Origin` header (only `psentha02.github.io` and localhost are allowed)
+   - Validates the `Origin` header — only `psentha02.github.io` and localhost are allowed
    - Rate-limits per IP (20 requests / 5 minutes)
-   - Extracts the current user message and up to 10 turns of conversation history
-   - Calls **Groq** with a system prompt containing the complete knowledge base (~4K tokens)
+   - Extracts the current user message and up to 10 turns of history
+   - Calls **Groq** with the full knowledge base in the system prompt (~5K tokens)
    - Returns `{ reply: "..." }`
-3. The reply is displayed in the chat UI.
+3. The reply is rendered by `BubbleContent` with formatting applied.
 
 ### Why full-context instead of RAG
 
-The entire knowledge base fits comfortably in Groq's 32K context window (~4K tokens). Sending all of it with every request means the LLM can never "miss" relevant context due to retrieval errors — a common failure mode in RAG systems with small, structured data. Simpler, faster, and more accurate for this use case.
+The entire knowledge base is ~5K tokens. Groq's context window is 32K. Sending everything with every request means the LLM can never miss relevant context — a common failure mode in RAG systems with small, structured datasets. Simpler, faster, and more accurate for this use case.
 
 ### Knowledge base
 
-The knowledge base is a markdown string constant at the top of `worker/src/index.js`. It covers:
+Defined as `KNOWLEDGE_BASE` at the top of `worker/src/index.js`. Covers:
 
-- Bio, contact, and what makes Praveen stand out
+- Bio, positioning, contact info, and what makes Praveen stand out
 - Work experience (Qualcomm full-time + intern, Stryker intern) with quantified impact
 - Projects (Text-to-SQL agent, Hunch, Telemetry pipelines) with technical depth
 - Full skills inventory with context on production usage
 - Education (Georgia Tech M.S. AI, Purdue B.S. Data Science)
-- Recruiter FAQ (visa status, relocation, open to roles, strongest achievements)
+- Recruiter FAQ (visa, relocation, open to roles, strongest achievements)
+
+### Updating the knowledge base
+
+Edit `KNOWLEDGE_BASE` in `worker/src/index.js`, then redeploy:
+
+```bash
+cd worker/
+wrangler deploy
+```
+
+No changes to `index.html` needed.
 
 ---
 
 ## Running Locally
 
 ```bash
-# Start a local HTTP server (Python, no install needed)
 python3 -m http.server 8080
-
-# Open in browser
 open http://localhost:8080
 ```
 
-The chat will call the live Cloudflare Worker (localhost is in the allowed-origins list).
+The chat calls the live Worker — `localhost:8080` is in the Worker's allowed-origins list.
 
 ---
 
@@ -102,20 +117,17 @@ The chat will call the live Cloudflare Worker (localhost is in the allowed-origi
 
 ### Site (GitHub Pages)
 
-The site is served from the `main` branch root via GitHub Pages.
+Work directly on `main` and push — GitHub Pages updates automatically within ~30 seconds.
 
 ```bash
-# Merge redesign-constellation into main when ready to go live
-git checkout main
-git merge redesign-constellation
+git add .
+git commit -m "your message"
 git push
 ```
 
-GitHub Pages picks up the change automatically within ~30 seconds.
-
 ### Cloudflare Worker
 
-The Worker must be deployed separately via Wrangler.
+The Worker deploys independently from the site.
 
 ```bash
 cd worker/
@@ -123,53 +135,34 @@ cd worker/
 # First-time setup
 npm install -g wrangler
 wrangler login
+wrangler secret put GROQ_API_KEY   # paste key from console.groq.com
 
-# Set the Groq API key (only needed once, or when rotating)
-wrangler secret put GROQ_API_KEY
-
-# Deploy
+# Deploy (run this any time worker/src/index.js changes)
 wrangler deploy
 ```
 
-The Worker URL is `https://pravgpt.pravgpt.workers.dev`. This is hardcoded in
-`index.html` as `PRAVGPT_ENDPOINT`.
+The Worker URL (`https://pravgpt.pravgpt.workers.dev`) is hardcoded in `index.html` as `PRAVGPT_ENDPOINT`. If you ever redeploy to a different Worker name, update that constant.
 
 ---
 
-## Updating the Knowledge Base
+## Secrets
 
-The knowledge base lives at the top of `worker/src/index.js` as the `KNOWLEDGE_BASE`
-constant. Edit the markdown there, then redeploy the Worker:
-
-```bash
-cd worker/
-wrangler deploy
-```
-
-No changes to `index.html` are needed.
-
----
-
-## Secrets and Environment Variables
-
-| Location | Secret | Purpose |
+| Location | Secret | How to set |
 |---|---|---|
-| Cloudflare Worker | `GROQ_API_KEY` | Authenticates requests to Groq |
-
-Set with: `wrangler secret put GROQ_API_KEY` from the `worker/` directory.
+| Cloudflare Worker | `GROQ_API_KEY` | `wrangler secret put GROQ_API_KEY` from `worker/` |
 
 The Groq API key is **never** in the static HTML or any client-loaded resource.
 
 ---
 
-## Tech Stack Summary
+## Tech Stack
 
 | Layer | Tech | Notes |
 |---|---|---|
 | Frontend | React 18 (CDN), Babel Standalone | No build step |
-| Hosting | GitHub Pages | Served from `main` branch |
-| AI Chat backend | Cloudflare Worker (free) | CORS proxy + rate limiter |
-| LLM | Groq `llama-3.3-70b-versatile` (free tier) | ~1,000 req/day |
+| Hosting | GitHub Pages | Served from `main` branch root |
+| AI chat backend | Cloudflare Worker (free plan) | CORS, rate limiting, Groq proxy |
+| LLM | Groq `llama-3.3-70b-versatile` (free tier) | ~1,000 req/day free |
 | Fonts | Google Fonts | Playfair Display, Inter |
 
-**Total monthly infrastructure cost: $0**
+**Total monthly cost: $0**
