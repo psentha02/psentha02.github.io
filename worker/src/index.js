@@ -6,14 +6,33 @@ const KNOWLEDGE_BASE = `
 # Praveen Sentha — Full Profile
 
 ## Who He Is
-Praveen Sentha is an Infrastructure Engineer at Qualcomm in San Diego, CA. He is simultaneously
-pursuing a Master of Science in Computer Science (AI specialization) at Georgia Institute of
-Technology (started January 2026). He graduated from Purdue University in December 2023 with a
-B.S. in Data Science and a Certificate in Entrepreneurship & Innovation.
+Praveen Sentha is an Infrastructure Engineer at Qualcomm in San Diego, CA, and is pursuing a
+Master of Science in Computer Science (AI specialization) at Georgia Institute of Technology
+(started January 2026). He graduated from Purdue University in December 2023 with a B.S. in
+Data Science and a Certificate in Entrepreneurship & Innovation.
 
-His career sits at the intersection of large-scale infrastructure and applied AI — he builds
-the systems that manage thousands of servers, and the AI agents that make those systems
-understandable in plain English. He is a U.S. Citizen and does not require visa sponsorship.
+He is a U.S. Citizen and does not require visa sponsorship.
+
+## In His Own Words (About Section)
+"I sit at the intersection where infrastructure ends and AI begins. At Qualcomm, I own the
+complete lifecycle of production servers across 20+ global data centers — from validating firmware
+on a freshly racked machine to building the LangChain agent that lets directors query the entire
+fleet in plain English. Most engineers live on one side of that line. I work both.
+
+My flagship project is a text-to-SQL agent — LangChain, Anthropic, FAISS — that reduced
+root-cause analysis time by 90% in a production environment. Not a side project: a system real
+directors use every day to interrogate 5,000+ ESXi hosts, backed by telemetry pipelines I built
+to ingest 100K+ rows every 30 minutes.
+
+I'm formalizing the theory at Georgia Tech's OMSCS (AI specialization) while staying heads-down
+at Qualcomm. Outside of work I built Hunch, a peer-to-peer prediction market, because I build
+things for fun. Eagle Scout, varsity tennis captain — I know how to commit and see things through."
+
+## Currently
+- Studying AI & ML theory at Georgia Tech OMSCS
+- Shipping production infrastructure tooling at Qualcomm
+- Exploring agentic systems, LLM reasoning, and distributed AI workloads
+- Built this portfolio's AI chat (PravGPT) using Cloudflare Workers + Groq
 
 ## Contact
 - Email: praveen.sentha@gmail.com
@@ -24,13 +43,17 @@ understandable in plain English. He is a U.S. Citizen and does not require visa 
 - Location: San Diego, CA
 
 ## What Makes Praveen Stand Out
-Praveen bridges two worlds that rarely overlap: deep infrastructure expertise (5,000+ ESXi hosts,
-20+ global data centers) and hands-on production AI/LLM experience (built a LangChain agent that
-cut director-level RCA time by 90%). This combination is rare and valuable for companies building
-AI-powered infrastructure tooling, MLOps platforms, or bringing intelligence to their systems layer.
+Most engineers are infra specialists or AI specialists. Praveen is both — and in production, not
+just on paper. He physically racks servers and writes the LLM agents that query them. That
+combination is increasingly rare and valuable as companies try to bridge platform/infra teams with
+their AI teams.
 
 He shipped a production LLM agent at Qualcomm that real directors use daily — not a proof of
 concept. The agent writes SQL, executes it, and returns answers about a global server fleet.
+
+Interests: Distributed Systems, LLM Agents & RAG, Infrastructure Automation, Observability,
+Prediction Markets, Tennis, Scouting & Leadership.
+Honors: Eagle Scout, Varsity Tennis Captain, Azure Fundamentals certified.
 
 ---
 

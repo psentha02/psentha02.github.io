@@ -40,9 +40,19 @@
     citizenship: "U.S. Citizen",
 
     about: {
-      short: "Infrastructure engineer turning servers, telemetry, and LLMs into reliable systems.",
-      long: "I'm an Infrastructure Engineer at Qualcomm working on server lifecycle automation — everything from racking new hardware to building LangChain agents that let directors ask plain-English questions about our fleet. Currently pursuing an M.S. in CS (AI track) at Georgia Tech while shipping production tooling that touches 5,000+ ESXi hosts and 20+ global data centers.",
-      interests: ["Distributed systems", "LLM agents & RAG", "Observability", "Tennis", "Scouting"],
+      short: "Bridging systems and intelligence.",
+      paragraphs: [
+        "I sit at the intersection where infrastructure ends and AI begins. At Qualcomm, I own the complete lifecycle of production servers across 20+ global data centers — from validating firmware on a freshly racked machine to building the LangChain agent that lets directors query the entire fleet in plain English. Most engineers live on one side of that line. I work both.",
+        "My flagship project is a text-to-SQL agent — LangChain, Anthropic, FAISS — that reduced root-cause analysis time by 90% in a production environment. Not a side project: a system real directors use every day to interrogate 5,000+ ESXi hosts, backed by telemetry pipelines I built to ingest 100K+ rows every 30 minutes.",
+        "I'm formalizing the theory at Georgia Tech's OMSCS (AI specialization) while staying heads-down at Qualcomm. Outside of work I built Hunch, a peer-to-peer prediction market, because I build things for fun. Eagle Scout, varsity tennis captain — I know how to commit and see things through.",
+      ],
+      currently: [
+        "Studying AI & ML theory — Georgia Tech OMSCS",
+        "Shipping production infrastructure tooling at Qualcomm",
+        "Exploring agentic systems, LLM reasoning, and distributed AI workloads",
+        "Built this portfolio's AI chat (PravGPT) — ask it anything",
+      ],
+      interests: ["Distributed Systems", "LLM Agents & RAG", "Infrastructure Automation", "Observability", "Prediction Markets", "Tennis", "Scouting & Leadership"],
     },
 
     education: [
@@ -409,7 +419,7 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
                 onClick={() => setPage('about')} active={page === 'about'}>
                 <CardIcon><PersonIcon /></CardIcon>
                 <CardTitle font={fonts.display}>About</CardTitle>
-                <CardSub muted={palette.muted}>A bit about myself.</CardSub>
+                <CardSub muted={palette.muted}>Bridging systems and intelligence.</CardSub>
                 <img
                   src="./Sentha_Family_2.jpg"
                   alt="Praveen Sentha"
@@ -841,27 +851,81 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
     </h2>
   );
 
+  const AboutLabel = ({ children, palette }) => (
+    <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase', color: palette.muted, marginBottom: 16 }}>{children}</div>
+  );
+
   const AboutDetail = ({ data, palette, fonts }) => (
-    <div>
-      <SectionH font={fonts.display}>About</SectionH>
-      <p style={{ fontSize: 16, lineHeight: 1.7, color: palette.soft }}>{data.about.long}</p>
-      <h3 style={{ fontSize: 14, color: palette.muted, marginTop: 32, marginBottom: 12, letterSpacing: '0.1em', textTransform: 'uppercase' }}>The Specs</h3>
-      <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: 14, lineHeight: 2, color: palette.softer }}>
-        <li><span style={{ color: palette.muted }}>Location:</span> {data.location}</li>
-        <li><span style={{ color: palette.muted }}>Email:</span> {data.email}</li>
-        <li><span style={{ color: palette.muted }}>Citizenship:</span> {data.citizenship}</li>
-      </ul>
-      <h3 style={{ fontSize: 14, color: palette.muted, marginTop: 32, marginBottom: 12, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Education</h3>
-      {data.education.map((e, i) => (
-        <div key={i} style={{ marginBottom: 14 }}>
-          <div style={{ fontSize: 15, fontWeight: 500 }}>{e.school}</div>
-          <div style={{ fontSize: 13, color: palette.muted }}>{e.degree} · {e.dates}</div>
-        </div>
+    <div style={{ WebkitFontSmoothing: 'antialiased', marginTop: 32 }}>
+
+      {/* Positioning headline */}
+      <p style={{ fontFamily: fonts.display, fontSize: 26, fontWeight: 600, lineHeight: 1.35, letterSpacing: '-0.01em', color: palette.fg, margin: '0 0 28px' }}>
+        Infrastructure engineer who ships LLM agents — not just prototypes.
+      </p>
+
+      {/* Bio paragraphs */}
+      {(data.about.paragraphs || []).map((p, i) => (
+        <p key={i} style={{ fontSize: 15, lineHeight: 1.85, color: palette.fg, opacity: 0.84, margin: '0 0 18px' }}>{p}</p>
       ))}
-      <h3 style={{ fontSize: 14, color: palette.muted, marginTop: 24, marginBottom: 12, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Tech Stack</h3>
+
+      {/* Currently */}
+      <div style={{ margin: '36px 0', padding: '20px 24px', background: palette.surface, border: `1px solid ${palette.border}`, borderLeft: `3px solid ${palette.accent}`, borderRadius: 12 }}>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.13em', textTransform: 'uppercase', color: palette.accent, marginBottom: 14 }}>Currently</div>
+        {(data.about.currently || []).map((item, i) => (
+          <div key={i} style={{ display: 'flex', gap: 12, marginBottom: i < data.about.currently.length - 1 ? 11 : 0, alignItems: 'flex-start' }}>
+            <span style={{ color: palette.accent, flexShrink: 0, marginTop: 1 }}>→</span>
+            <span style={{ fontSize: 14, color: palette.fg, opacity: 0.85, lineHeight: 1.5 }}>{item}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Education */}
+      <div style={{ marginBottom: 36 }}>
+        <AboutLabel palette={palette}>Education</AboutLabel>
+        {data.education.map((e, i) => (
+          <div key={i} style={{ display: 'flex', gap: 16, marginBottom: 18, alignItems: 'flex-start' }}>
+            <div style={{ width: 46, height: 46, borderRadius: 12, flexShrink: 0, background: `${palette.accent}18`, border: `1px solid ${palette.accent}30`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, fontWeight: 700, color: palette.accent }}>
+              {e.school.split(' ').map(w => w[0]).join('').slice(0, 2)}
+            </div>
+            <div>
+              <div style={{ fontSize: 15, fontWeight: 600, color: palette.fg, marginBottom: 3 }}>{e.school}</div>
+              <div style={{ fontSize: 13, color: palette.muted }}>{e.degree}</div>
+              <div style={{ fontSize: 12, color: palette.muted, opacity: 0.65, marginTop: 2 }}>{e.dates}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Interests */}
+      <div style={{ marginBottom: 36 }}>
+        <AboutLabel palette={palette}>Interests</AboutLabel>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+          {(data.about.interests || []).map((item, i) => (
+            <span key={i} style={{ fontSize: 13, padding: '7px 16px', borderRadius: 999, background: palette.surface, border: `1px solid ${palette.border}`, color: palette.softer }}>{item}</span>
+          ))}
+        </div>
+      </div>
+
+      {/* Quick facts */}
+      <div style={{ marginBottom: 36, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+        {[
+          { label: 'Location', value: data.location },
+          { label: 'Citizenship', value: data.citizenship },
+          { label: 'Email', value: data.email },
+          { label: 'Honors', value: 'Eagle Scout · Varsity Tennis Captain' },
+        ].map(({ label, value }) => (
+          <div key={label} style={{ padding: '14px 16px', background: palette.surface, border: `1px solid ${palette.border}`, borderRadius: 10 }}>
+            <div style={{ fontSize: 11, color: palette.muted, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 4 }}>{label}</div>
+            <div style={{ fontSize: 13, color: palette.fg, opacity: 0.85 }}>{value}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Tech Stack */}
+      <AboutLabel palette={palette}>Tech Stack</AboutLabel>
       {Object.entries(data.skills).map(([k, v]) => (
-        <div key={k} style={{ marginBottom: 12 }}>
-          <div style={{ fontSize: 12, color: palette.accent, marginBottom: 6, fontWeight: 500 }}>{k}</div>
+        <div key={k} style={{ marginBottom: 14 }}>
+          <div style={{ fontSize: 12, color: palette.accent, marginBottom: 7, fontWeight: 500 }}>{k}</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
             {v.map((s, i) => (
               <span key={i} style={{ fontSize: 12, padding: '4px 10px', borderRadius: 999, background: palette.bg, border: `1px solid ${palette.border}`, color: palette.softer }}>{s}</span>
