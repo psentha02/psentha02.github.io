@@ -1,262 +1,1371 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Portfolio" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <script
-      src="https://kit.fontawesome.com/13215e4e6c.js"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <link rel="stylesheet" href="styles.css" />
-    <title>Praveen Sentha</title>
-  </head>
-  <body class="light" id="top">
-    <header class="header center">
-      <h3>
-        <a href="https://psentha02.github.io/" class="link"
-          >PS.</a
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Praveen Sentha — Infrastructure & AI Engineer building automation, observability, and AI tools at scale." />
+  <title>Praveen Sentha</title>
+
+  <!-- Fonts: classic (Playfair Display + Inter), modern (Fraunces + DM Sans), techy (Newsreader + JetBrains Mono) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Fraunces:wght@600&family=Newsreader:wght@600&family=Inter:wght@400;500&family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- React 18 + ReactDOM 18 -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <!-- Babel for in-browser JSX -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; overflow: hidden; background: #0e0d0c; }
+    #root { width: 100vw; height: 100vh; }
+    *::-webkit-scrollbar { display: none; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <!-- ─── Portfolio Data ─────────────────────────────────────── -->
+  <script>
+  window.PORTFOLIO_DATA = {
+    name: "Praveen Sentha",
+    role: "Infrastructure & AI Engineer",
+    tagline: "Building automation, observability, and AI tools at scale.",
+    location: "San Diego, CA",
+    email: "praveen.sentha@gmail.com",
+    phone: "(925) 366-0766",
+    website: "psentha02.github.io",
+    citizenship: "U.S. Citizen",
+
+    about: {
+      short: "Infrastructure engineer turning servers, telemetry, and LLMs into reliable systems.",
+      long: "I'm an Infrastructure Engineer at Qualcomm working on server lifecycle automation — everything from racking new hardware to building LangChain agents that let directors ask plain-English questions about our fleet. Currently pursuing an M.S. in CS (AI track) at Georgia Tech while shipping production tooling that touches 5,000+ ESXi hosts and 20+ global data centers.",
+      interests: ["Distributed systems", "LLM agents & RAG", "Observability", "Tennis", "Scouting"],
+    },
+
+    education: [
+      {
+        school: "Georgia Institute of Technology",
+        degree: "M.S. Computer Science, Artificial Intelligence",
+        dates: "Jan 2026 – Present",
+      },
+      {
+        school: "Purdue University",
+        degree: "B.S. Data Science, Certificate in Entrepreneurship & Innovation",
+        dates: "Aug 2020 – Dec 2023",
+      },
+    ],
+
+    experience: [
+      {
+        company: "Qualcomm",
+        title: "Infrastructure Engineer — Server Lifecycle Automation",
+        location: "San Diego, CA",
+        dates: "Feb 2024 – Present",
+        highlights: [
+          "Delivered ~100 production servers across 20+ global data centers — owning procurement-to-production lifecycle and validating firmware, BIOS, and out-of-band management for customer-facing engineering workloads.",
+          "Built a LangChain + Anthropic LLM + FAISS natural-language text-to-SQL agent with a semantic layer for infrastructure resources, cutting time-to-insight for RCA by ~90%.",
+          "Enabled continuous infrastructure telemetry ingestion (~100K+ rows / 30-min cadence) using PowerShell and Python workflows orchestrated through Azure DevOps CI/CD.",
+          "Drove director-level capacity planning by designing a structured SQL data model and delivering Grafana dashboards and alerting for CPU, memory, and storage optimization.",
+          "Secured credentials for 5,000+ ESXi hosts (400+ monthly net-new onboardings) by leading CyberArk PAM onboarding with automated password vaulting and rotation.",
+        ],
+      },
+      {
+        company: "Qualcomm",
+        title: "Software Engineering Intern — Server Lifecycle Automation",
+        location: "San Diego, CA",
+        dates: "May 2023 – Aug 2023",
+        highlights: [
+          "Developed a showback notification framework with query views and director-level visuals to reduce company-wide virtualization costs.",
+          "Constructed a VM template pipeline on Azure DevOps + VMware vRealize with monthly template updates, new security features, and automated deployment tests.",
+          "Enhanced a system-management software framework used by IT; validated end-to-end with Postman.",
+        ],
+      },
+      {
+        company: "Stryker",
+        title: "Software Design Engineering Intern",
+        location: "San Jose, CA",
+        dates: "May 2022 – Aug 2022",
+        highlights: [
+          "Built a C# GUI app that dynamically presents and updates parameters, improving display monitor testing efficiency by 70%.",
+          "Used Microsoft SQL Server to store performance data for further analysis.",
+        ],
+      },
+    ],
+
+    projects: [
+      {
+        name: "Hunch",
+        tagline: "Peer-to-peer prediction market platform",
+        url: "hunch-beta.vercel.app",
+        description: "Production-ready P2P prediction market — market creation, predictions, outcome resolution, and fair zero-sum payouts via a refund-based model. Serverless on Next.js + Supabase + Vercel + Google OAuth.",
+        stack: ["Next.js", "Supabase", "PostgreSQL", "Vercel", "OAuth"],
+      },
+      {
+        name: "Text-to-SQL Infra Agent",
+        tagline: "Natural-language queries over our server fleet",
+        description: "Internal LangChain + Anthropic + FAISS agent with a semantic layer over infrastructure data. Engineers and directors ask plain-English questions; the agent writes the SQL, runs it, and returns answers. Cut RCA time-to-insight by ~90%.",
+        stack: ["LangChain", "Anthropic", "FAISS", "PostgreSQL", "Python"],
+      },
+      {
+        name: "Telemetry Ingestion Pipelines",
+        tagline: "100K+ rows on a 30-minute cadence",
+        description: "PowerShell + Python collection workflows orchestrated through Azure DevOps CI/CD with distributed low-latency ingestion VMs, validation checks, and automated alerting.",
+        stack: ["PowerShell", "Python", "Azure DevOps", "Grafana"],
+      },
+    ],
+
+    skills: {
+      "Languages": ["Python", "PowerShell", "SQL", "Go", "Java", "JavaScript", "C#", "R"],
+      "Infrastructure": ["VMware ESXi", "vCenter", "Hyper-V", "SCVMM", "Azure Local", "VDI", "Cloud PCs", "CyberArk PAM", "Active Directory"],
+      "Cloud & DevOps": ["Azure", "AWS", "Azure DevOps", "Git", "Terraform", "Kubernetes"],
+      "Data & Observability": ["Grafana", "Prometheus", "MS SQL Server", "PostgreSQL", "MongoDB", "Neo4j", "Spark", "Hadoop", "Kibana"],
+      "AI": ["LangChain", "FAISS", "RAG", "Text-to-SQL", "Prompt Engineering", "Claude", "Cursor"],
+    },
+
+    honors: ["Eagle Scout", "Varsity Tennis Captain", "Azure Fundamentals certified"],
+
+    contact: {
+      email: "praveen.sentha@gmail.com",
+      phone: "(925) 366-0766",
+      website: "psentha02.github.io",
+      linkedin: "linkedin.com/in/praveen-sentha",
+      github: "github.com/psentha02",
+    },
+
+    starters: [
+      "What does Praveen do at Qualcomm?",
+      "Tell me about the text-to-SQL agent",
+      "What's his tech stack?",
+      "Is he open to new opportunities?",
+      "What's Hunch?",
+    ],
+  };
+  </script>
+
+  <!-- ─── PravGPT Chat Logic ─────────────────────────────────── -->
+  <script type="text/babel" data-presets="react">
+  const PRAVGPT_SYSTEM_PROMPT = `You are PravGPT, an AI assistant embedded on Praveen Sentha's personal portfolio website. Your job is to answer visitors' questions about Praveen, his work, his projects, and his background.
+
+Tone: casual but polite, informative, concise. Speak in first person ABOUT Praveen (i.e. "Praveen built…" or "He works at Qualcomm…"), never as Praveen. Use plain prose — no markdown headings, no bullet lists unless the visitor explicitly asks for a list. Keep replies under 4 short sentences unless asked for detail.
+
+If asked something not covered by the data below, say you don't have that info and suggest reaching out via the contact card. Don't make things up.
+
+=== DATA ABOUT PRAVEEN ===
+${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
+`;
+
+  // Replace REPLACE_WITH_YOUR_WORKER_URL with your deployed Cloudflare Worker URL
+  // e.g. 'https://pravgpt.yourname.workers.dev/chat'
+  const PRAVGPT_ENDPOINT = 'https://pravgpt.pravgpt.workers.dev/chat';
+
+  const MAX_INPUT_CHARS = 1000;
+  const MAX_HISTORY_TURNS = 10; // keep last 10 user+assistant pairs
+
+  window.usePravGPT = function usePravGPT() {
+    const [messages, setMessages] = React.useState([]);
+    const [sending, setSending] = React.useState(false);
+    const nextId = React.useRef(0);
+
+    const send = React.useCallback(async (userText) => {
+      if (!userText || sending) return;
+      const trimmed = userText.trim();
+      if (!trimmed) return;
+      if (trimmed.length > MAX_INPUT_CHARS) return;
+
+      const uid = nextId.current++;
+      const userMsg = { id: `u${uid}`, role: 'user', content: trimmed };
+      const placeholder = { id: `a${uid}`, role: 'assistant', content: '', pending: true };
+      setMessages((m) => [...m, userMsg, placeholder]);
+      setSending(true);
+
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 30000);
+
+      try {
+        // Build history: last N turns only, strip UI-only fields (id, pending)
+        const history = [...messages, userMsg]
+          .slice(-(MAX_HISTORY_TURNS * 2))
+          .map(({ role, content }) => ({ role, content }));
+
+        const res = await fetch(PRAVGPT_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          signal: controller.signal,
+          body: JSON.stringify({
+            messages: [
+              { role: 'system', content: PRAVGPT_SYSTEM_PROMPT },
+              ...history,
+            ],
+          }),
+        });
+
+        const data = await res.json();
+
+        let reply;
+        if (res.ok && data.reply) {
+          reply = data.reply;
+        } else if (data.error === 'rate_limited') {
+          reply = "You've sent a lot of messages — give it a minute and try again.";
+        } else {
+          reply = "Hmm, something went wrong on my end. Try again, or reach Praveen directly at praveen.sentha@gmail.com.";
+        }
+
+        setMessages((m) => {
+          const copy = [...m];
+          const last = copy[copy.length - 1];
+          copy[copy.length - 1] = { ...last, content: reply, pending: false };
+          return copy;
+        });
+      } catch (err) {
+        const isTimeout = err.name === 'AbortError';
+        setMessages((m) => {
+          const copy = [...m];
+          const last = copy[copy.length - 1];
+          copy[copy.length - 1] = {
+            ...last,
+            pending: false,
+            content: isTimeout
+              ? "That took too long — try a shorter question, or email Praveen at praveen.sentha@gmail.com."
+              : "Couldn't reach the model. Try again in a sec, or email praveen.sentha@gmail.com.",
+          };
+          return copy;
+        });
+      } finally {
+        clearTimeout(timeout);
+        setSending(false);
+      }
+    }, [messages, sending]);
+
+    const reset = React.useCallback(() => setMessages([]), []);
+
+    return { messages, sending, send, reset };
+  };
+  </script>
+
+  <!-- ─── Variation A — Constellation ──────────────────────────── -->
+  <script type="text/babel" data-presets="react">
+  const VarA = ({ data, tweaks }) => {
+    const { messages, sending, send, reset } = window.usePravGPT();
+    const [input, setInput] = React.useState('');
+    const [chatMode, setChatMode] = React.useState(false);
+
+    const TITLES = ['AI Engineer', 'Infrastructure Architect', 'Problem Solver'];
+    const [titleIdx, setTitleIdx] = React.useState(0);
+    const [titleVisible, setTitleVisible] = React.useState(true);
+    React.useEffect(() => {
+      const id = setInterval(() => {
+        setTitleVisible(false);
+        setTimeout(() => { setTitleIdx(i => (i + 1) % TITLES.length); setTitleVisible(true); }, 700);
+      }, 3200);
+      return () => clearInterval(id);
+    }, []);
+    const [page, _setPage] = React.useState(() => {
+      const h = (typeof window !== 'undefined' && window.location.hash || '').replace('#/', '').replace('#', '');
+      return ['about','work','projects','contact'].includes(h) ? h : 'home';
+    });
+    const setPage = React.useCallback((p) => {
+      _setPage(p);
+      try {
+        const hash = p === 'home' ? '' : `#/${p}`;
+        window.history.pushState({ page: p }, '', window.location.pathname + window.location.search + hash);
+      } catch (e) {}
+      if (typeof window !== 'undefined') window.scrollTo(0, 0);
+    }, []);
+    React.useEffect(() => {
+      const onPop = () => {
+        const h = (window.location.hash || '').replace('#/', '').replace('#', '');
+        _setPage(['about','work','projects','contact'].includes(h) ? h : 'home');
+      };
+      window.addEventListener('popstate', onPop);
+      return () => window.removeEventListener('popstate', onPop);
+    }, []);
+    const [theme, setTheme] = React.useState('dark');
+    const scrollRef = React.useRef(null);
+    const detailScrollRef = React.useRef(null);
+
+    React.useEffect(() => {
+      if (!scrollRef.current) return;
+      // Scroll after the DOM paints so animation doesn't fight the scroll position
+      requestAnimationFrame(() => {
+        if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      });
+    }, [messages]);
+
+    React.useEffect(() => {
+      if (detailScrollRef.current) detailScrollRef.current.scrollTop = 0;
+    }, [page]);
+
+    const exitChat = () => { setChatMode(false); reset(); };
+
+    const onSubmit = (e) => {
+      e.preventDefault();
+      if (!input.trim() || sending || input.length > 1000) return;
+      setChatMode(true);
+      send(input);
+      setInput('');
+    };
+
+    const palettes = {
+      dark: {
+        warm: { bg: '#0e0d0c', surface: '#1a1816', border: '#2a2622', accent: '#f4d8a8', muted: '#8a8278', fg: '#f6f3ee', soft: '#e8e4dd', softer: '#d4cfc6' },
+        cool: { bg: '#050810', surface: '#0c1428', border: '#1a2a50', accent: '#90c4ff', muted: '#8aa4c8', fg: '#ffffff', soft: '#ffffff', softer: '#ccdcf8' },
+        plum: { bg: '#10090f', surface: '#1d1320', border: '#2c1f30', accent: '#e8b8d8', muted: '#8a7a85', fg: '#f6f3ee', soft: '#e8d8e0', softer: '#d4c0cc' },
+      },
+      light: {
+        warm: { bg: '#f5efe4', surface: '#fffaf0', border: '#e0d6c4', accent: '#b8843a', muted: '#7a6e5a', fg: '#1a1612', soft: '#2a2418', softer: '#3a3328' },
+        cool: { bg: '#eef1f6', surface: '#fbfcff', border: '#d6dde8', accent: '#3a6cb8', muted: '#5a6878', fg: '#0f1420', soft: '#1f2530', softer: '#2f3540' },
+        plum: { bg: '#f4eef2', surface: '#fff8fc', border: '#e4d6dc', accent: '#a83a7a', muted: '#7a5a6e', fg: '#1c1118', soft: '#2c1f28', softer: '#3c2f38' },
+      },
+    };
+    const palette = { ...palettes[theme][tweaks.palette || 'warm'], theme };
+
+    const fonts = {
+      classic: { display: '"Playfair Display", Georgia, serif', body: 'Inter, system-ui, sans-serif' },
+      modern: { display: '"Fraunces", Georgia, serif', body: '"DM Sans", system-ui, sans-serif' },
+      techy: { display: '"Newsreader", Georgia, serif', body: '"JetBrains Mono", monospace' },
+    }[tweaks.fonts || 'classic'];
+
+    const showStars = tweaks.bg !== 'none' && tweaks.bg !== 'grid' && tweaks.bg !== 'noise';
+    const showGrid = tweaks.bg === 'grid';
+    const showNoise = tweaks.bg === 'noise';
+
+    const cardStyleBase = {
+      glass: { background: `${palette.surface}bb`, backdropFilter: 'blur(12px)', border: `1px solid ${palette.border}` },
+      flat: { background: palette.surface, border: 'none' },
+      bordered: { background: palette.surface, border: `1px solid ${palette.border}` },
+    }[tweaks.cardStyle || 'bordered'];
+
+    const density = tweaks.density === 'tight' ? 0.8 : tweaks.density === 'loose' ? 1.25 : 1;
+
+    return (
+      <div data-screen-label="Variation A — Constellation" style={{
+        width: '100%', minHeight: '100vh', background: palette.bg, color: palette.fg,
+        fontFamily: fonts.body, position: 'relative', overflow: 'hidden',
+        paddingBottom: tweaks.chatPos === 'top' ? 40 : 260,
+        paddingTop: tweaks.chatPos === 'top' ? 280 : 160,
+        transition: 'background-color 600ms ease, color 600ms ease',
+      }}>
+        {/* Background */}
+        {showStars && <StarField accent={palette.accent} theme={palette.theme} />}
+        {showGrid && <div style={{
+          position: 'absolute', inset: 0,
+          backgroundImage: `linear-gradient(${palette.border} 1px, transparent 1px), linear-gradient(90deg, ${palette.border} 1px, transparent 1px)`,
+          backgroundSize: '48px 48px', opacity: 0.4, pointerEvents: 'none',
+        }} />}
+        {showNoise && <div style={{
+          position: 'absolute', inset: 0, opacity: 0.06, pointerEvents: 'none',
+          backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>")`,
+        }} />}
+
+        {/* Pendant orb — dangles on mouse, click to toggle theme */}
+        <PendantOrb
+          accent={palette.accent}
+          muted={palette.muted}
+          theme={theme}
+          onToggle={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
+        />
+
+        {/* Header — fixed, always visible across all pages */}
+        <header
+          onClick={chatMode ? exitChat : page !== 'home' ? () => setPage('home') : undefined}
+          style={{
+            textAlign: 'center',
+            position: 'fixed', top: 0, left: 0, right: 0,
+            zIndex: 100,
+            padding: '20px 0 16px',
+            background: `linear-gradient(to bottom, ${palette.bg} 65%, transparent)`,
+            cursor: (chatMode || page !== 'home') ? 'pointer' : 'default',
+          }}
         >
-      </h3>
+          <h1 style={{
+            fontFamily: fonts.display,
+            fontSize: 'clamp(38px, 4.5vw, 68px)',
+            fontWeight: 600, letterSpacing: '-0.02em', margin: 0,
+            color: palette.fg, textWrap: 'balance',
+            textShadow: '0 0 60px rgba(126,184,247,0.25)',
+          }}>{data.name}</h1>
+          <p style={{
+            fontSize: 13, marginTop: 8, letterSpacing: '0.18em', textTransform: 'uppercase',
+            color: palette.accent,
+            opacity: titleVisible ? 1 : 0,
+            transition: 'opacity 700ms ease',
+          }}>
+            {TITLES[titleIdx]}
+          </p>
+        </header>
 
-      <nav class="nav center">
-        <ul class="nav__list center">
-          <!-- 
-          <li class="nav__list-item">
-            <a class="link link--nav" href="#about">Experience</a>
-          </li>
-          -->
-          <li class="nav__list-item">
-            <a class="link link--nav" href="#projects">Experiences</a>
-          </li>
-          <li class="nav__list-item">
-            <a class="link link--nav" href="#skills">Skills</a>
-          </li>
-          <li class="nav__list-item">
-            <a class="link link--nav" href="#contact">Contact</a>
-          </li>
-        </ul>
-
-        <button type="button" aria-label="toggle theme" class="btn btn--icon">
-          <i aria-hidden="true" id="btn-theme" class="fas fa-moon"></i>
-        </button>
-
-        <button
-          type="button"
-          aria-label="toggle navigation"
-          class="btn btn--icon nav__hamburger"
-        >
-          <i aria-hidden="true" class="fas fa-bars"></i>
-        </button>
-      </nav>
-    </header>
-
-    <main>
-      <!-- About -->
-      <div class="about center">
-        <h1>Hi, I am <span class="about__name">Praveen Sentha.</span></h1>
-        <h2 style="margin-bottom: 1em;"> I am a <span id="typed"></span></h2>
-
-        <p class="about__desc">
-          Passionate about cloud automation and AI, always looking for ways to improve systems and solve complex challenges. I specialize in optimizing workflows using tools like Azure, Kubernetes, and Python. As a lifelong learner, I'm always eager to explore new technologies and collaborate on innovative projects that drive will make an impact.
-        </p>
-
-        <div class="about__contact center">
-          <a 
-          href="https://drive.google.com/file/d/1uMKvPUc--YTagfEsn_tdd0FBTJxUzWG7/view?usp=sharing"
-          target="_blank"
-          rel="noopener noreferrer"
-          >
-            <span class="btn btn--outline">Resume</span>
-          </a>
-
-          <a
-            href="https://github.com/psentha02"
-            aria-label="github"
-            class="link link--icon"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i aria-hidden="true" class="fa-brands fa-github"></i>
-          </a>
-       
-          <a
-            href="https://linkedin.com/in/praveen-sentha"
-            aria-label="linkedin"
-            class="link link--icon"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <i aria-hidden="true" class="fa-brands fa-linkedin-in"></i>
-          </a>
-        </div>
-      </div>
-      
-
-      <!-- Projects -->
-      <section id="projects" class="section projects">
-        <h2 class="section__title">Experiences</h2>
-
-        <div class="projects__grid">
-          
-
-          <div class="project">
-            <h3 style="color: var(--clr-primary);">Qualcomm</h3>
-            <p class="project__date">February 2024 - Present</p>
-            <ul class="project__description">
-              <li>Built a scalable Azure monitoring solution using PowerShell, Python, and Azure DevOps to automate SCVMM data ingestion and visualize infrastructure KPIs and migration progress in Grafana.</li>
-              <li>Improved incident response and visibility by integrating real-time Teams and email alerts, enabling teams to proactively manage patching, security, and cloud issues across a multi-OS environment.</li>
-              <li>Led a company-wide vDesk password rotation initiative, coordinating with cross-functional teams to ensure secure, disruption-free rollout across diverse infrastructure.</li>
-              <li>Developed scripts to configure subnets, manage access controls, and handle resource-specific constraints, ensuring a secure and compliant deployment.</li>
-              <li>Mentored an incoming intern by providing technical guidance, onboarding support, and project mentorship to accelerate their learning experience and integration within the team.</li>
-            </ul>
-            <ul class="project__stack">
-              <li class="project__stack-item">Azure Cloud Services</li>
-              <li class="project__stack-item">Grafana</li>
-              <li class="project__stack-item">Powershell</li>
-              <li class="project__stack-item">Python</li>
-              <li class="project__stack-item">VMware</li>
-              <li class="project__stack-item">Azure DevOps</li>
-              <li class="project__stack-item">SQL</li>
-              <li class="project__stack-item">Kubernetes</li>
-            </ul>
-          </div>
-          
-          <!--
-          <div class="project">
-            <h3>Project 3</h3>
-            <p class="project__description">
-              Ipsum accusamus ea excepturi aliquid eligendi amet. Explicabo
-              sapiente debitis labore sed ipsam Mollitia repellat illum quod
-              unde beatae Quis
-            </p>
-            <ul class="project__stack">
-              <li class="project__stack-item">SASS</li>
-              <li class="project__stack-item">TypeScript</li>
-              <li class="project__stack-item">React</li>
-            </ul>
-
-            <a
-              href="https://github.com"
-              aria-label="source code"
-              class="link link--icon"
-            >
-              <i aria-hidden="true" class="fab fa-github"></i>
-            </a>
-            <a
-              href="https://example.com"
-              aria-label="live preview"
-              class="link link--icon"
-            >
-              <i aria-hidden="true" class="fas fa-external-link-alt"></i>
-            </a>
-          </div>
-          -->
-        </div>
-
-        <h2 class="section__title" style="margin-top: 20px;">Projects</h2>
-
-        <div class="projects__grid">
-
-          <a href="https://github.com/psentha02/cloud-provisioner-go" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
-          <div class="project">
-            <h3 style="color: var(--clr-primary);">Azure Resource Manager CLI Tool</h3>
-            <ul class="project__description">
-              <li>A beginner-friendly cloud automation CLI tool built with Go that uses the Azure SDK to manage Resource Groups from your terminal.</li>
-              <li>This project is part of my journey into cloud development and DevOps using Go, designed for clean code, modular design, and real-world cloud integration.</li>
-            </ul>
-            <ul class="project__stack">
-              <li class="project__stack-item">Azure Cloud Platform</li>
-              <li class="project__stack-item">Go</li>
-              <li class="project__stack-item">Azure SDK</li>
-            </ul>
-            <i aria-hidden="true" class="fa-brands fa-github fa-2xl" style="color: var(--clr-fg)"></i>
-          </div>
-          </a>
-
-          <a href="https://github.com/psentha02/secureVM" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
-            <div class="project">
-              <h3 style="color: var(--clr-primary);">Terraform Secure Azure VM Provisioning</h3>
-              <ul class="project__description">
-                <li>This project demonstrates how to provision a secure Ubuntu Virtual Machine on Microsoft Azure using Terraform.</li>
-                <li>It includes setting up a virtual network, subnet, network interface, network security group (NSG), and VM with SSH key authentication.</li>
-              </ul>
-              <ul class="project__stack">
-                <li class="project__stack-item">Azure Cloud Platform</li>
-                <li class="project__stack-item">Terraform</li>
-                <li class="project__stack-item">HCL</li>
-              </ul>
-              <i aria-hidden="true" class="fa-brands fa-github fa-2xl" style="color: var(--clr-fg)"></i>
+        {/* Card grid — hidden in chatMode */}
+        {!chatMode && (
+          <main style={{
+            maxWidth: 1280, margin: '0 auto', padding: '0 32px', position: 'relative', zIndex: 2,
+            display: page === 'home' ? 'grid' : 'none', gridTemplateColumns: '1.1fr 1.6fr 1.3fr', gap: 20 * density,
+            animation: 'fadeIn 300ms ease',
+          }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 20 * density }}>
+              <Card style={{ ...cardStyleBase, minHeight: 200 }} accent={palette.accent} muted={palette.muted} border={palette.border}
+                onClick={() => setPage('about')} active={page === 'about'}>
+                <CardIcon><PersonIcon /></CardIcon>
+                <CardTitle font={fonts.display}>About</CardTitle>
+                <CardSub muted={palette.muted}>A bit about myself.</CardSub>
+                <img
+                  src="./Sentha_Family_2.jpg"
+                  alt="Praveen Sentha"
+                  style={{
+                    position: 'absolute', right: 0, top: 0, bottom: 0,
+                    width: '52%', height: '100%',
+                    objectFit: 'cover', objectPosition: 'center 20%',
+                    maskImage: 'linear-gradient(to right, transparent 0%, black 38%)',
+                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 38%)',
+                    pointerEvents: 'none',
+                  }}
+                />
+              </Card>
+              <Card style={cardStyleBase} accent={palette.accent} muted={palette.muted} border={palette.border}
+                onClick={() => setPage('work')} active={page === 'work'}>
+                <CardIcon><BriefcaseIcon /></CardIcon>
+                <CardTitle font={fonts.display}>Work</CardTitle>
+                <CardSub muted={palette.muted}>My career.</CardSub>
+              </Card>
             </div>
-          </a>
-        </div>  
-      </section>
+            <Card style={{ ...cardStyleBase, minHeight: 320 }} accent={palette.accent} muted={palette.muted} border={palette.border}
+              onClick={() => setPage('projects')} active={page === 'projects'} large>
+              <ProjectMarquee projects={data.projects} />
+              <div style={{ position: 'absolute', bottom: 24, left: 24, right: 24 }}>
+                <CardIcon><FolderIcon /></CardIcon>
+                <CardTitle font={fonts.display}>Projects</CardTitle>
+                <CardSub muted={palette.muted}>Recent Developments</CardSub>
+              </div>
+            </Card>
+            <Card style={{ ...cardStyleBase, minHeight: 320 }} accent={palette.accent} muted={palette.muted} border={palette.border}
+              onClick={() => setPage('contact')} active={page === 'contact'}>
+              <ContactDoodle />
+              <div style={{ position: 'absolute', bottom: 24, left: 24, right: 24 }}>
+                <CardIcon><SendIcon /></CardIcon>
+                <CardTitle font={fonts.display}>Contact</CardTitle>
+                <CardSub muted={palette.muted}>Email, LinkedIn, GitHub.</CardSub>
+              </div>
+            </Card>
+          </main>
+        )}
 
-      <!-- Skills -->
-      <section class="section skills" id="skills">
-        <h2 class="section__title">Skills</h2>
-        <ul class="skills__list">
-          <li class="skills__list-item btn btn--plain">Python</li>
-          <li class="skills__list-item btn btn--plain">SQL</li>
-          <li class="skills__list-item btn btn--plain">Azure</li>
-          <li class="skills__list-item btn btn--plain">HTML</li>
-          <li class="skills__list-item btn btn--plain">CSS</li>
-          <li class="skills__list-item btn btn--plain">JavaScript</li>
-          <li class="skills__list-item btn btn--plain">Grafana</li>
-          <li class="skills__list-item btn btn--plain">Kubernetes</li>
-          <li class="skills__list-item btn btn--plain">Cloud Infrastructure</li>
-          <li class="skills__list-item btn btn--plain">Gen AI</li>
-          <li class="skills__list-item btn btn--plain">Git</li>
-          <li class="skills__list-item btn btn--plain">Powershell</li>
-          <li class="skills__list-item btn btn--plain">CI/CD</li>
-        </ul>
-      </section>
+        {/* Chat conversation view — replaces grid when chatMode is active */}
+        {chatMode && page === 'home' && (
+          <div
+            ref={scrollRef}
+            style={{
+              maxWidth: 1280, margin: '0 auto', padding: '0 32px 32px',
+              maxHeight: 'calc(100vh - 380px)', overflowY: 'auto',
+              scrollbarWidth: 'none',
+              position: 'relative', zIndex: 2,
+              animation: 'fadePage 300ms ease',
+            }}
+          >
+            <style>{`
+              @keyframes slideInRight {
+                from { opacity: 0; transform: translateX(16px); }
+                to   { opacity: 1; transform: translateX(0); }
+              }
+              @keyframes slideInLeft {
+                from { opacity: 0; transform: translateX(-16px); }
+                to   { opacity: 1; transform: translateX(0); }
+              }
+              @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+            `}</style>
+            {messages.map((m) => {
+              const isUser = m.role === 'user';
+              return (
+                <div key={m.id} style={{
+                  display: 'flex',
+                  justifyContent: isUser ? 'flex-end' : 'flex-start',
+                  marginBottom: 16,
+                  animation: `${isUser ? 'slideInRight' : 'slideInLeft'} 0.28s cubic-bezier(0.16, 1, 0.3, 1) both`,
+                }}>
+                  <div style={{
+                    maxWidth: isUser ? '58%' : '84%',
+                    padding: '12px 18px',
+                    borderRadius: isUser ? '18px 18px 4px 18px' : '4px 18px 18px 18px',
+                    fontSize: 15, lineHeight: 1.75,
+                    background: isUser
+                      ? (palette.theme === 'dark' ? 'rgba(255,255,255,0.09)' : palette.surface)
+                      : (palette.theme === 'dark' ? 'rgba(255,255,255,0.05)' : palette.bg),
+                    border: `1px solid ${palette.theme === 'dark' ? (isUser ? 'rgba(255,255,255,0.14)' : 'rgba(255,255,255,0.08)') : palette.border}`,
+                    color: palette.fg,
+                  }}>
+                    {m.pending ? <TypingDots accent={palette.muted} /> : m.content}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
 
-      <!-- Contact -->
-      <section class="section contact center" id="contact">
-        <h2 class="section__title">Contact</h2>
-        <a href="mailto:praveen.sentha@gmail.com">
-          <span class="btn btn--outline">Email Me</span>
-        </a>
-      </section>
-    </main>
+        {/* Detail page (full-page replacement) */}
+        {page !== 'home' && (
+          <DetailPage
+            which={page}
+            data={data}
+            palette={palette}
+            fonts={fonts}
+            onNavigate={setPage}
+            scrollRef={detailScrollRef}
+          />
+        )}
 
-    <footer class="footer">
-      <a
-        href="https://github.com/rjshkhr/cleanfolio-minimal"
-        class="link footer__link"
-      >
-      </a>
-    </footer>
+        {/* Chat bar — always fixed at bottom on home */}
+        {page === 'home' && (
+          <ChatBar
+            chatMode={chatMode}
+            sending={sending}
+            input={input}
+            setInput={setInput}
+            onSubmit={onSubmit}
+            starters={data.starters}
+            onStarter={(s) => { setChatMode(true); send(s); }}
+            palette={palette}
+            fonts={fonts}
+            botName="PravGPT"
+          />
+        )}
 
-    <div class="scroll-container">
-      <div class="scroll-top">
-        <a aria-label="Scroll up" href="#top">
-          <i aria-hidden="true" class="fas fa-arrow-up"></i>
-        </a>
+        <style>{`
+          @keyframes orbPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px ${palette.accent}80; }
+            50% { transform: scale(1.15); box-shadow: 0 0 30px ${palette.accent}cc; }
+          }
+          @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.9; }
+          }
+          .portfolio-card .card-visual {
+            transition: transform 500ms cubic-bezier(0.34, 1.9, 0.64, 1);
+            transform-origin: left center;
+          }
+          .portfolio-card:hover .card-visual {
+            transform: scale(1.7);
+          }
+          @keyframes msgDot {
+            0%, 60%, 100% { opacity: 0.35; transform: scale(0.8); }
+            30% { opacity: 1; transform: scale(1.2); }
+          }
+        `}</style>
+      </div>
+    );
+  };
+
+  /* ── Sub-components ── */
+
+  const StarField = ({ accent, theme }) => {
+    const stars = React.useMemo(() => Array.from({ length: 80 }).map(() => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 2 + 0.5,
+      delay: Math.random() * 4,
+      bright: Math.random() > 0.92,
+    })), []);
+    const dimColor = theme === 'dark' ? '#fff' : '#1a2a50';
+    return (
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+        {stars.map((s, i) => (
+          <div key={i} style={{
+            position: 'absolute', left: `${s.x}%`, top: `${s.y}%`,
+            width: s.size, height: s.size, borderRadius: '50%',
+            background: s.bright ? accent : dimColor,
+            opacity: theme === 'dark' ? 0.4 : 0.18,
+            animation: `twinkle ${3 + s.delay}s ease-in-out ${s.delay}s infinite`,
+          }} />
+        ))}
+      </div>
+    );
+  };
+
+  const Card = ({ children, style, onClick, active, large, accent, muted, border }) => (
+    <button onClick={onClick} className="portfolio-card" style={{
+      ...style,
+      borderRadius: 14, padding: 24, position: 'relative', overflow: 'hidden',
+      cursor: 'pointer', textAlign: 'left', color: 'inherit', font: 'inherit',
+      minHeight: large ? 320 : 150,
+      transition: 'transform 220ms ease, border-color 220ms ease',
+      transform: active ? 'translateY(-2px)' : 'none',
+      borderColor: active ? accent : undefined,
+    }}
+    onMouseEnter={(e) => { e.currentTarget.style.borderColor = accent; e.currentTarget.style.transform = 'translateY(-2px)'; }}
+    onMouseLeave={(e) => { e.currentTarget.style.borderColor = active ? accent : (border || 'transparent'); e.currentTarget.style.transform = active ? 'translateY(-2px)' : 'none'; }}
+    >{children}</button>
+  );
+
+  const CardIcon = ({ children }) => (
+    <div className="card-visual" style={{ width: 28, height: 28, marginBottom: 20, opacity: 0.9 }}>{children}</div>
+  );
+
+  const CardTitle = ({ children, font }) => (
+    <h2 style={{ fontFamily: font, fontSize: 28, fontWeight: 600, margin: '0 0 6px', letterSpacing: '-0.01em' }}>{children}</h2>
+  );
+
+  const CardSub = ({ children, muted }) => (
+    <p style={{ fontSize: 14, color: muted, margin: 0, lineHeight: 1.5 }}>{children}</p>
+  );
+
+  const PersonIcon = () => (<svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>);
+  const BriefcaseIcon = () => (<svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg>);
+  const FolderIcon = () => (<svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>);
+  const SendIcon = () => (<svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="m3 11 18-8-8 18-2-8-8-2z"/></svg>);
+
+  const Sparkline = ({ accent }) => (
+    <svg viewBox="0 0 100 24" style={{ position: 'absolute', right: 16, top: 16, width: 80, height: 24, opacity: 0.5 }}>
+      <polyline points="0,18 12,12 24,16 36,8 48,14 60,4 72,10 84,6 100,2"
+        fill="none" stroke={accent} strokeWidth="1.5" />
+    </svg>
+  );
+
+  const WorkPreview = ({ exp, accent, muted }) => (
+    <div style={{ display: 'flex', gap: 6, marginTop: 16, alignItems: 'center' }}>
+      {exp.map((e, i) => (
+        <React.Fragment key={i}>
+          <div style={{
+            fontSize: 11, padding: '4px 10px', borderRadius: 999,
+            background: i === 0 ? `${accent}25` : 'rgba(255,255,255,0.05)',
+            color: i === 0 ? accent : muted, fontWeight: 500,
+          }}>{e.company}</div>
+          {i < exp.length - 1 && <div style={{ width: 8, height: 1, background: muted, opacity: 0.4 }} />}
+        </React.Fragment>
+      ))}
+    </div>
+  );
+
+  const ProjectMarquee = ({ projects }) => {
+    const tiles = [...projects, ...projects];
+    return (
+      <div style={{
+        position: 'absolute', top: 24, left: 0, right: 0, height: 140,
+        maskImage: 'linear-gradient(90deg, transparent, black 10%, black 90%, transparent)',
+        WebkitMaskImage: 'linear-gradient(90deg, transparent, black 10%, black 90%, transparent)',
+        overflow: 'hidden',
+      }}>
+        <div style={{
+          display: 'flex', gap: 14, padding: '0 24px',
+          animation: 'marquee 28s linear infinite',
+          width: 'max-content',
+        }}>
+          {tiles.map((p, i) => {
+            const idx = i % projects.length;
+            const meta = PROJ_META[idx] || PROJ_META[0];
+            const { Icon } = meta;
+            return (
+              <div key={i} style={{
+                width: 120, height: 120, borderRadius: 18, flexShrink: 0,
+                background: meta.gradient,
+                display: 'flex', flexDirection: 'column',
+                alignItems: 'center', justifyContent: 'center', gap: 8,
+              }}>
+                <Icon />
+                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.88)', fontWeight: 600, letterSpacing: '0.02em' }}>
+                  {p.name.split(' ')[0]}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <style>{`@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }`}</style>
+      </div>
+    );
+  };
+
+  const ContactDoodle = () => {
+    const ROW_H = 30;
+    const ANIM = 380;
+    const nextId = React.useRef(0);
+
+    const makeBubble = () => {
+      const id = nextId.current++;
+      return { id, side: id % 2 === 0 ? 'blue' : 'green' };
+    };
+
+    const [items, setItems] = React.useState(() => [makeBubble(), makeBubble(), makeBubble(), makeBubble()]);
+    const [removingId, setRemovingId] = React.useState(null);
+    const [enteringId, setEnteringId] = React.useState(null);
+    const itemsRef = React.useRef(items);
+    itemsRef.current = items;
+
+    React.useEffect(() => {
+      let t2, t3;
+
+      const cycle = () => {
+        // Phase 1: slide top bubble up and fade it out
+        const topId = itemsRef.current[0]?.id ?? null;
+        setRemovingId(topId);
+
+        // Phase 2: after slide-out, shift the queue and add new bubble at bottom
+        t2 = setTimeout(() => {
+          setRemovingId(null);
+          const rest = itemsRef.current.slice(1);
+          const nb = makeBubble();
+          setEnteringId(nb.id);
+          setItems([...rest, nb]);
+          // Phase 3: fade new bubble in
+          t3 = setTimeout(() => setEnteringId(null), 40);
+        }, ANIM);
+      };
+
+      // 1 second pause + ANIM slide + ANIM slide-up/enter = full cycle
+      const interval = setInterval(cycle, 1000 + ANIM * 2 + 60);
+      const first = setTimeout(cycle, 1000);
+      return () => { clearTimeout(first); clearTimeout(t2); clearTimeout(t3); clearInterval(interval); };
+    }, []);
+
+    return (
+      <div style={{
+        position: 'absolute', top: 24, right: 24,
+        width: 150, height: 4 * ROW_H,
+        overflow: 'hidden',
+      }}>
+        {items.map((b, i) => {
+          const isBlue = b.side === 'blue';
+          const isLeaving = b.id === removingId;
+          const isEntering = b.id === enteringId;
+          return (
+            <div key={b.id} style={{
+              position: 'absolute',
+              top: isLeaving ? -ROW_H : i * ROW_H,
+              left: 0, right: 0, height: ROW_H,
+              opacity: isLeaving || isEntering ? 0 : 1,
+              transition: `top ${ANIM}ms cubic-bezier(0.4,0,0.2,1), opacity ${Math.round(ANIM * 0.75)}ms ease`,
+              display: 'flex',
+              justifyContent: isBlue ? 'flex-start' : 'flex-end',
+              alignItems: 'center',
+            }}>
+              <div style={{
+                width: 62, height: 22,
+                borderRadius: isBlue ? '10px 10px 10px 3px' : '10px 10px 3px 10px',
+                background: isBlue ? '#2563eb' : '#22c55e',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 3,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.35)',
+              }}>
+                {[0,1,2].map(d => (
+                  <div key={d} style={{
+                    width: 4, height: 4, borderRadius: '50%', background: '#fff',
+                    animation: `msgDot 1.2s ease-in-out ${d * 0.2}s infinite`,
+                  }} />
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  /* ── Detail Pages ── */
+
+  const NAV_ITEMS = [
+    { id: 'home', label: 'Home', icon: 'home' },
+    { id: 'about', label: 'About', icon: 'person' },
+    { id: 'projects', label: 'Projects', icon: 'folder' },
+    { id: 'work', label: 'Work', icon: 'briefcase' },
+    { id: 'contact', label: 'Contact', icon: 'send' },
+  ];
+
+  const NavIcon = ({ kind }) => {
+    if (kind === 'home') return <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg>;
+    if (kind === 'person') return <svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>;
+    if (kind === 'folder') return <svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>;
+    if (kind === 'briefcase') return <svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg>;
+    if (kind === 'send') return <svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="m3 11 18-8-8 18-2-8-8-2z"/></svg>;
+    return null;
+  };
+
+  const Sidebar = ({ active, onNavigate, palette }) => {
+    const [hovered, setHovered] = React.useState(null);
+    return (
+      <nav style={{
+        position: 'fixed', left: 24, top: '50%', transform: 'translateY(-50%)',
+        display: 'flex', flexDirection: 'column', gap: 8, zIndex: 10,
+        background: `${palette.surface}cc`, backdropFilter: 'blur(8px)',
+        border: `1px solid ${palette.border}`, borderRadius: 999, padding: 8,
+      }}>
+        {NAV_ITEMS.map(item => {
+          const isActive = active === item.id;
+          const isHov = hovered === item.id && !isActive;
+          return (
+            <button key={item.id}
+              onClick={() => onNavigate(item.id)}
+              onMouseEnter={() => setHovered(item.id)}
+              onMouseLeave={() => setHovered(null)}
+              aria-label={item.label} title={item.label}
+              style={{
+                width: 44, height: 44, borderRadius: '50%',
+                background: isActive ? palette.accent : isHov ? (palette.theme === 'dark' ? 'rgba(255,255,255,0.08)' : `${palette.accent}18`) : 'transparent',
+                color: isActive ? palette.bg : isHov ? '#fff' : palette.muted,
+                border: 'none', cursor: 'pointer', padding: 0,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                transition: 'background 250ms ease, color 250ms ease, transform 350ms cubic-bezier(0.34, 1.7, 0.64, 1), filter 250ms ease',
+                transform: isHov ? 'scale(1.3)' : 'scale(1)',
+                filter: isHov ? `drop-shadow(0 0 10px ${palette.accent}90)` : 'none',
+              }}
+            >
+              <div style={{ width: 20, height: 20 }}><NavIcon kind={item.icon} /></div>
+            </button>
+          );
+        })}
+      </nav>
+    );
+  };
+
+  const DetailPage = ({ which, data, palette, fonts, onNavigate, scrollRef }) => {
+    const content = {
+      about: <AboutDetail data={data} palette={palette} fonts={fonts} />,
+      work: <WorkDetail data={data} palette={palette} fonts={fonts} />,
+      projects: <ProjectsDetail data={data} palette={palette} fonts={fonts} />,
+      contact: <ContactDetail data={data} palette={palette} fonts={fonts} />,
+    }[which];
+    const label = NAV_ITEMS.find(n => n.id === which)?.label || '';
+    return (
+      <div ref={scrollRef} style={{
+        position: 'absolute', inset: 0, overflowY: 'auto', zIndex: 20,
+        animation: 'fadePage 250ms ease',
+      }}>
+        <Sidebar active={which} onNavigate={onNavigate} palette={palette} fonts={fonts} />
+        <div style={{ maxWidth: 760, margin: '0 auto', padding: '170px 32px 80px' }}>
+          {content}
+        </div>
+        <style>{`@keyframes fadePage { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }`}</style>
+      </div>
+    );
+  };
+
+  const SectionH = ({ children, font }) => (
+    <h2 style={{ fontFamily: font, fontSize: 36, fontWeight: 600, margin: '0 0 20px', letterSpacing: '-0.01em' }}>
+      {children}
+    </h2>
+  );
+
+  const AboutDetail = ({ data, palette, fonts }) => (
+    <div>
+      <SectionH font={fonts.display}>About</SectionH>
+      <p style={{ fontSize: 16, lineHeight: 1.7, color: palette.soft }}>{data.about.long}</p>
+      <h3 style={{ fontSize: 14, color: palette.muted, marginTop: 32, marginBottom: 12, letterSpacing: '0.1em', textTransform: 'uppercase' }}>The Specs</h3>
+      <ul style={{ listStyle: 'none', padding: 0, margin: 0, fontSize: 14, lineHeight: 2, color: palette.softer }}>
+        <li><span style={{ color: palette.muted }}>Location:</span> {data.location}</li>
+        <li><span style={{ color: palette.muted }}>Email:</span> {data.email}</li>
+        <li><span style={{ color: palette.muted }}>Citizenship:</span> {data.citizenship}</li>
+      </ul>
+      <h3 style={{ fontSize: 14, color: palette.muted, marginTop: 32, marginBottom: 12, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Education</h3>
+      {data.education.map((e, i) => (
+        <div key={i} style={{ marginBottom: 14 }}>
+          <div style={{ fontSize: 15, fontWeight: 500 }}>{e.school}</div>
+          <div style={{ fontSize: 13, color: palette.muted }}>{e.degree} · {e.dates}</div>
+        </div>
+      ))}
+      <h3 style={{ fontSize: 14, color: palette.muted, marginTop: 24, marginBottom: 12, letterSpacing: '0.1em', textTransform: 'uppercase' }}>Tech Stack</h3>
+      {Object.entries(data.skills).map(([k, v]) => (
+        <div key={k} style={{ marginBottom: 12 }}>
+          <div style={{ fontSize: 12, color: palette.accent, marginBottom: 6, fontWeight: 500 }}>{k}</div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+            {v.map((s, i) => (
+              <span key={i} style={{ fontSize: 12, padding: '4px 10px', borderRadius: 999, background: palette.bg, border: `1px solid ${palette.border}`, color: palette.softer }}>{s}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
+  const WorkDetail = ({ data, palette, fonts }) => (
+    <div style={{ WebkitFontSmoothing: 'antialiased', marginTop: 40 }}>
+      <div style={{ position: 'relative' }}>
+        <div style={{
+          position: 'absolute', left: 19, top: 10, bottom: 20, width: 1,
+          background: `linear-gradient(to bottom, ${palette.accent}90, ${palette.border}30)`,
+          pointerEvents: 'none',
+        }} />
+        {data.experience.map((e, i) => (
+          <div key={i} style={{ position: 'relative', paddingLeft: 52, marginBottom: 48 }}>
+            <div style={{
+              position: 'absolute', left: 12, top: 4, width: 15, height: 15, borderRadius: '50%',
+              background: i === 0 ? palette.accent : palette.surface,
+              border: `2px solid ${i === 0 ? palette.accent : palette.border}`,
+              boxShadow: i === 0 ? `0 0 16px ${palette.accent}70` : 'none',
+            }} />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: 8, marginBottom: 5 }}>
+              <span style={{ fontSize: 16, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: palette.accent }}>{e.company}</span>
+              <span style={{ fontSize: 15, color: palette.muted, fontVariantNumeric: 'tabular-nums' }}>{e.dates}</span>
+            </div>
+            <h3 style={{ fontSize: 18, fontWeight: 600, margin: '0 0 3px', color: palette.fg, lineHeight: 1.3 }}>{e.title}</h3>
+            <div style={{ fontSize: 12, color: palette.muted, marginBottom: 16, letterSpacing: '0.02em' }}>{e.location}</div>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {e.highlights.map((h, j) => (
+                <li key={j} style={{ display: 'flex', gap: 12, marginBottom: 11, alignItems: 'flex-start' }}>
+                  <span style={{ flexShrink: 0, marginTop: 9, width: 4, height: 4, borderRadius: '50%', background: palette.accent, opacity: 0.65, display: 'block' }} />
+                  <span style={{ fontSize: 14, lineHeight: 1.8, color: palette.fg, opacity: 0.88 }}>{h}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </div>
+  );
 
-    <script src="./script.js"></script>
+  const ProjIcon0 = () => (
+    <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+      <circle cx="22" cy="22" r="11" stroke="rgba(255,255,255,0.9)" strokeWidth="1.8"/>
+      <path d="M17 22l3-5 4 8 3-5" stroke="rgba(255,255,255,0.9)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+  const ProjIcon1 = () => (
+    <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+      <ellipse cx="22" cy="14" rx="11" ry="4.5" stroke="rgba(255,255,255,0.9)" strokeWidth="1.8"/>
+      <path d="M11 14v8c0 2.5 4.9 4.5 11 4.5s11-2 11-4.5v-8" stroke="rgba(255,255,255,0.9)" strokeWidth="1.8"/>
+      <path d="M11 22v6c0 2.5 4.9 4.5 11 4.5s11-2 11-4.5v-6" stroke="rgba(255,255,255,0.6)" strokeWidth="1.8"/>
+    </svg>
+  );
+  const ProjIcon2 = () => (
+    <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+      <polyline points="6,32 12,22 19,27 27,13 33,19 38,10" stroke="rgba(255,255,255,0.9)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      <line x1="6" y1="37" x2="38" y2="37" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5"/>
+    </svg>
+  );
+  const PROJ_META = [
+    { gradient: 'linear-gradient(135deg, #0c2d6b 0%, #1d55c8 100%)', Icon: ProjIcon0 },
+    { gradient: 'linear-gradient(135deg, #0a3329 0%, #0e7c6a 100%)', Icon: ProjIcon1 },
+    { gradient: 'linear-gradient(135deg, #251540 0%, #6d28d9 100%)', Icon: ProjIcon2 },
+  ];
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var typed = new Typed("#typed", {
-          strings: ["Developer", "Learner", "Sports Enthusiast"],
-          typeSpeed: 60,
-          backSpeed: 40,
-          backDelay: 1500,
-          loop: true
-        });
-      });
-    </script>
-    
-  </body>
+  const ProjectDetailView = ({ project, meta, palette, fonts, onBack }) => {
+    const { Icon } = meta;
+    return (
+      <div style={{ WebkitFontSmoothing: 'antialiased', animation: 'projIn 480ms cubic-bezier(0.16, 1, 0.3, 1) both' }}>
+        <style>{`@keyframes projIn { from { opacity: 0; transform: translateY(20px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }`}</style>
+        <button onClick={onBack} style={{
+          background: 'transparent', border: 'none', cursor: 'pointer', padding: 0,
+          color: palette.muted, fontSize: 14, display: 'flex', alignItems: 'center', gap: 6,
+          marginBottom: 28, fontFamily: 'inherit',
+        }}>← Back to Projects</button>
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 24, padding: '24px 28px',
+          borderRadius: 20, background: meta.gradient,
+          marginBottom: 36, boxShadow: '0 8px 40px rgba(0,0,0,0.5)',
+        }}>
+          <div style={{
+            width: 84, height: 84, borderRadius: 20, flexShrink: 0,
+            background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.22)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}><Icon /></div>
+          <div>
+            <div style={{ fontSize: 26, fontWeight: 700, fontFamily: fonts.display, color: '#fff', marginBottom: 6 }}>{project.name}</div>
+            <div style={{ fontSize: 15, color: 'rgba(255,255,255,0.78)', lineHeight: 1.4 }}>{project.tagline}</div>
+          </div>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 220px', gap: 36, alignItems: 'start' }}>
+          <div>
+            <h3 style={{ fontFamily: fonts.display, fontSize: 22, color: palette.fg, margin: '0 0 14px' }}>About</h3>
+            <p style={{ fontSize: 15, lineHeight: 1.82, color: palette.fg, opacity: 0.86, margin: 0 }}>{project.description}</p>
+          </div>
+          <div>
+            <h3 style={{ fontFamily: fonts.display, fontSize: 22, color: palette.fg, margin: '0 0 14px' }}>Info</h3>
+            {project.url && <a href={`https://${project.url}`} target="_blank" rel="noreferrer" style={{ fontSize: 13, color: palette.accent, display: 'block', marginBottom: 22, textDecoration: 'none' }}>{project.url} ↗</a>}
+            <h3 style={{ fontFamily: fonts.display, fontSize: 18, color: palette.fg, margin: '0 0 12px' }}>Tech</h3>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
+              {project.stack.map((s, j) => (
+                <span key={j} style={{
+                  fontSize: 12, padding: '5px 12px', borderRadius: 999, fontWeight: 500,
+                  background: `${palette.accent}20`, border: `1px solid ${palette.accent}45`, color: palette.accent,
+                }}>{s}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const ProjectsDetail = ({ data, palette, fonts }) => {
+    const [selected, setSelected] = React.useState(null);
+    if (selected !== null) {
+      return (
+        <ProjectDetailView
+          project={data.projects[selected]}
+          meta={PROJ_META[selected] || PROJ_META[0]}
+          palette={palette} fonts={fonts}
+          onBack={() => setSelected(null)}
+        />
+      );
+    }
+    return (
+      <div style={{ WebkitFontSmoothing: 'antialiased', marginTop: 40 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 26 }}>
+          {data.projects.map((p, i) => {
+            const meta = PROJ_META[i] || PROJ_META[0];
+            const { Icon } = meta;
+            return (
+              <button key={i} onClick={() => setSelected(i)} style={{
+                display: 'flex', alignItems: 'center', gap: 32, padding: '32px 40px',
+                borderRadius: 24, background: meta.gradient, border: 'none',
+                cursor: 'pointer', textAlign: 'left', color: '#fff', width: '100%',
+                transition: 'transform 200ms ease, box-shadow 200ms ease',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.35)',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 16px 40px rgba(0,0,0,0.5)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.35)'; }}
+              >
+                <div style={{
+                  width: 100, height: 100, borderRadius: 22, flexShrink: 0,
+                  background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}><Icon /></div>
+                <div>
+                  <div style={{ fontSize: 26, fontWeight: 700, fontFamily: fonts.display, marginBottom: 9 }}>{p.name}</div>
+                  <div style={{ fontSize: 16, opacity: 0.82, lineHeight: 1.55 }}>{p.tagline}</div>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  const ContactIconEmail = () => (<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.7"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>);
+  const ContactIconLinkedIn = () => (<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.7"><rect x="2" y="2" width="20" height="20" rx="4"/><path d="M7 10v7M7 7v.01M12 10v7m0-4a3 3 0 0 1 6 0v4"/></svg>);
+  const ContactIconGitHub = () => (<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>);
+  const ContactIconGlobe = () => (<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.7"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>);
+  const ContactIconPhone = () => (<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6.08 6.08l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>);
+
+  const ContactCard = ({ icon, label, value, href, palette }) => {
+    const [hov, setHov] = React.useState(false);
+    return (
+      <a href={href} target={href && !href.startsWith('mailto') && !href.startsWith('tel') ? '_blank' : undefined}
+        rel="noreferrer"
+        onMouseEnter={() => setHov(true)}
+        onMouseLeave={() => setHov(false)}
+        style={{
+          display: 'flex', alignItems: 'center', gap: 16, padding: '20px 22px',
+          background: hov ? `${palette.accent}10` : palette.surface,
+          border: `1px solid ${hov ? palette.accent : palette.border}`,
+          borderRadius: 14, textDecoration: 'none', color: 'inherit',
+          transition: 'background 200ms, border-color 200ms, transform 200ms',
+          transform: hov ? 'translateY(-2px)' : 'none',
+          cursor: href ? 'pointer' : 'default',
+        }}>
+        <div style={{
+          width: 44, height: 44, borderRadius: 12, flexShrink: 0,
+          background: `${palette.accent}18`, color: palette.accent,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>{icon}</div>
+        <div style={{ minWidth: 0 }}>
+          <div style={{ fontSize: 11, color: palette.muted, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 3 }}>{label}</div>
+          <div style={{ fontSize: 14, color: palette.fg, fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{value}</div>
+        </div>
+        {href && <div style={{ marginLeft: 'auto', color: palette.muted, fontSize: 16, flexShrink: 0 }}>↗</div>}
+      </a>
+    );
+  };
+
+  const ContactDetail = ({ data, palette, fonts }) => (
+    <div style={{ WebkitFontSmoothing: 'antialiased', marginTop: 40 }}>
+      <div style={{ marginBottom: 36 }}>
+        <h2 style={{ fontFamily: fonts.display, fontSize: 36, fontWeight: 600, margin: '0 0 10px', letterSpacing: '-0.01em', color: palette.fg }}>
+          Let's connect.
+        </h2>
+        <p style={{ fontSize: 15, color: palette.muted, lineHeight: 1.6, margin: 0 }}>
+          Best reached by email — I typically respond within a day or two.
+        </p>
+      </div>
+
+      {/* Featured email */}
+      <a href={`mailto:${data.contact.email}`}
+        style={{
+          display: 'flex', alignItems: 'center', gap: 20, padding: '24px 28px',
+          background: `linear-gradient(135deg, ${palette.accent}18, ${palette.accent}08)`,
+          border: `1px solid ${palette.accent}50`,
+          borderRadius: 18, textDecoration: 'none', color: 'inherit', marginBottom: 16,
+          transition: 'opacity 200ms',
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.opacity = '0.85'}
+        onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+      >
+        <div style={{
+          width: 52, height: 52, borderRadius: 14, flexShrink: 0,
+          background: palette.accent, color: palette.bg,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}><ContactIconEmail /></div>
+        <div>
+          <div style={{ fontSize: 11, color: palette.accent, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4, fontWeight: 600 }}>Email</div>
+          <div style={{ fontSize: 17, color: palette.fg, fontWeight: 600 }}>{data.contact.email}</div>
+        </div>
+        <div style={{ marginLeft: 'auto', color: palette.accent, fontSize: 20 }}>↗</div>
+      </a>
+
+      {/* Grid of other links */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+        <ContactCard icon={<ContactIconLinkedIn />} label="LinkedIn" value={data.contact.linkedin} href={`https://${data.contact.linkedin}`} palette={palette} />
+        <ContactCard icon={<ContactIconGitHub />} label="GitHub" value={data.contact.github} href={`https://${data.contact.github}`} palette={palette} />
+        <ContactCard icon={<ContactIconGlobe />} label="Website" value={data.contact.website} href={`https://${data.contact.website}`} palette={palette} />
+        <ContactCard icon={<ContactIconPhone />} label="Phone" value={data.contact.phone} href={`tel:${data.contact.phone}`} palette={palette} />
+      </div>
+    </div>
+  );
+
+  /* ── Chat Bar ── */
+
+  const ChatBar = ({ chatMode, sending, input, setInput, onSubmit, starters, onStarter, palette, botName }) => (
+    <div style={{
+      position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 50,
+      padding: '48px 80px 32px', pointerEvents: 'none',
+      background: `linear-gradient(to top, ${palette.bg} 60%, transparent 100%)`,
+    }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px', pointerEvents: 'auto' }}>
+
+        {/* Label + pills — only on home before any conversation */}
+        {!chatMode && (
+          <>
+            <div style={{
+              textAlign: 'center', marginBottom: 18,
+              fontSize: 20, fontWeight: 600, letterSpacing: '0.04em',
+              color: palette.accent,
+            }}>
+              Ask {botName}
+            </div>
+            <div style={{ display: 'flex', gap: 8, justifyContent: 'center', marginBottom: 16, flexWrap: 'wrap' }}>
+              {starters.map((s, i) => (
+                <button key={i} onClick={() => onStarter(s)} style={{
+                  fontSize: 13, padding: '7px 16px', borderRadius: 999,
+                  background: 'transparent', border: `1px solid ${palette.theme === 'dark' ? 'rgba(255,255,255,0.18)' : palette.border}`,
+                  color: palette.muted, cursor: 'pointer',
+                  transition: 'border-color 150ms, color 150ms', fontFamily: 'inherit',
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = palette.accent; e.currentTarget.style.color = palette.accent; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = palette.theme === 'dark' ? 'rgba(255,255,255,0.18)' : palette.border; e.currentTarget.style.color = palette.muted; }}
+                >{s}</button>
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* Standalone input box */}
+        <form onSubmit={onSubmit} style={{ position: 'relative' }}>
+          <div style={{
+            background: palette.theme === 'dark' ? 'rgba(255,255,255,0.06)' : palette.surface,
+            border: `1px solid ${palette.theme === 'dark' ? 'rgba(255,255,255,0.11)' : palette.border}`,
+            borderRadius: 16,
+            padding: '16px 64px 40px 24px',
+            minHeight: 120,
+            boxShadow: '0 8px 40px rgba(0,0,0,0.5)',
+          }}>
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder={chatMode ? 'Continue the conversation…' : 'What would you like to know?'}
+              disabled={sending}
+              style={{
+                width: '100%', background: 'transparent', border: 'none', outline: 'none',
+                color: palette.fg, fontSize: 15, fontFamily: 'inherit',
+                display: 'block', lineHeight: 1.5,
+              }}
+            />
+          </div>
+          <button type="submit" disabled={!input.trim() || sending} style={{
+            position: 'absolute', bottom: 14, right: 14,
+            width: 36, height: 36, borderRadius: 10,
+            background: input.trim() && !sending ? palette.accent : (palette.theme === 'dark' ? 'rgba(255,255,255,0.1)' : palette.border),
+            color: input.trim() && !sending ? palette.bg : palette.muted,
+            border: 'none', cursor: input.trim() && !sending ? 'pointer' : 'default',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            transition: 'background 150ms, color 150ms',
+          }}>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2"><path d="m3 11 18-8-8 18-2-8-8-2z"/></svg>
+          </button>
+        </form>
+
+      </div>
+    </div>
+  );
+
+  const TypingDots = ({ accent }) => (
+    <span style={{ display: 'inline-flex', gap: 4, alignItems: 'center', padding: '4px 0' }}>
+      {[0, 1, 2].map(i => (
+        <span key={i} style={{
+          width: 6, height: 6, borderRadius: '50%', background: accent,
+          animation: `dot 1.4s ease-in-out ${i * 0.16}s infinite`,
+        }} />
+      ))}
+      <style>{`@keyframes dot { 0%, 80%, 100% { opacity: 0.3; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }`}</style>
+    </span>
+  );
+
+  /* ── PendantOrb: physics-based light bulb that dangles and toggles theme ── */
+
+  const PendantOrb = ({ accent, muted, theme, onToggle }) => {
+    const ANCHOR_X = 'calc(100% - 88px)';
+    const CHAIN_LEN = 84;
+    const BEAD_COUNT = 18;
+
+    const [angle, setAngle] = React.useState(0);
+    const angleRef = React.useRef(0);
+    const velRef = React.useRef(0);
+    const targetRef = React.useRef(0);
+    const rafRef = React.useRef(0);
+    const anchorRef = React.useRef({ x: 0, y: 0 });
+    const wrapperRef = React.useRef(null);
+
+    React.useEffect(() => {
+      const updateAnchor = () => {
+        if (wrapperRef.current) {
+          const r = wrapperRef.current.getBoundingClientRect();
+          anchorRef.current = { x: r.left + r.width / 2, y: r.top };
+        }
+      };
+      updateAnchor();
+      window.addEventListener('resize', updateAnchor);
+      window.addEventListener('scroll', updateAnchor, true);
+      return () => {
+        window.removeEventListener('resize', updateAnchor);
+        window.removeEventListener('scroll', updateAnchor, true);
+      };
+    }, []);
+
+    React.useEffect(() => {
+      const onMove = (e) => {
+        const { x: ax, y: ay } = anchorRef.current;
+        const dx = e.clientX - ax;
+        const dy = e.clientY - (ay + CHAIN_LEN);
+        const dist = Math.hypot(dx, dy);
+        const influence = Math.max(0, 1 - dist / 260);
+        const targetAngle = Math.atan2(dx, Math.max(40, dy + 60)) * 0.6 * influence;
+        targetRef.current = Math.max(-0.7, Math.min(0.7, targetAngle));
+      };
+      window.addEventListener('mousemove', onMove);
+      return () => window.removeEventListener('mousemove', onMove);
+    }, []);
+
+    React.useEffect(() => {
+      const STIFFNESS = 0.06;
+      const DAMPING = 0.86;
+      const tick = () => {
+        const a = angleRef.current;
+        const v = velRef.current;
+        const t = targetRef.current;
+        const force = (t - a) * STIFFNESS;
+        const newV = (v + force) * DAMPING;
+        const newA = a + newV;
+        angleRef.current = newA;
+        velRef.current = newV;
+        if (Math.abs(newV) > 0.0002 || Math.abs(t - newA) > 0.0005) {
+          setAngle(newA);
+        } else {
+          angleRef.current = t;
+          setAngle(t);
+        }
+        rafRef.current = requestAnimationFrame(tick);
+      };
+      rafRef.current = requestAnimationFrame(tick);
+      return () => cancelAnimationFrame(rafRef.current);
+    }, []);
+
+    const beads = [];
+    for (let i = 0; i < BEAD_COUNT; i++) {
+      const t = (i + 1) / BEAD_COUNT;
+      const beadAngle = angle * Math.pow(t, 0.7);
+      const distance = t * CHAIN_LEN;
+      const x = Math.sin(beadAngle) * distance;
+      const y = Math.cos(beadAngle) * distance;
+      beads.push({ x, y });
+    }
+    const orbT = 1.0;
+    const orbAngle = angle * Math.pow(orbT, 0.7);
+    const orbX = Math.sin(orbAngle) * (CHAIN_LEN + 12);
+    const orbY = Math.cos(orbAngle) * (CHAIN_LEN + 12);
+
+    return (
+      <div ref={wrapperRef} style={{
+        position: 'fixed', top: 0, left: ANCHOR_X,
+        width: 1, height: CHAIN_LEN + 40, zIndex: 150, pointerEvents: 'none',
+      }}>
+        <div style={{
+          position: 'absolute', top: 0, left: 0, width: 6, height: 6,
+          borderRadius: '50%', background: muted, opacity: 0.6,
+          transform: 'translate(-50%, -50%)',
+        }} />
+        {beads.map((b, i) => (
+          <div key={i} style={{
+            position: 'absolute', left: b.x, top: b.y,
+            width: 4, height: 4, borderRadius: '50%',
+            background: muted, opacity: 0.55,
+            transform: 'translate(-50%, -50%)',
+          }} />
+        ))}
+        <button
+          onClick={onToggle}
+          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+          title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+          style={{
+            position: 'absolute', left: orbX, top: orbY,
+            width: 36, height: 48,
+            background: 'transparent', border: 'none', cursor: 'pointer',
+            transform: 'translate(-50%, -38%)',
+            pointerEvents: 'auto', padding: 0,
+            transition: 'filter 400ms ease',
+            filter: theme === 'light'
+              ? 'drop-shadow(0 0 18px rgba(255,210,90,0.95)) drop-shadow(0 0 36px rgba(255,180,40,0.55))'
+              : 'drop-shadow(0 0 4px rgba(0,0,0,0.4))',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.transform = 'translate(-50%, -38%) scale(1.08)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.transform = 'translate(-50%, -38%) scale(1)'; }}
+        >
+          <svg viewBox="0 0 36 48" width="36" height="48" style={{ display: 'block', overflow: 'visible' }}>
+            <defs>
+              <radialGradient id="bulbGlow" cx="50%" cy="55%" r="55%">
+                <stop offset="0%" stopColor={theme === 'light' ? '#fff5c2' : '#3a3a3a'} />
+                <stop offset="55%" stopColor={theme === 'light' ? '#ffd34d' : '#2a2a2a'} />
+                <stop offset="100%" stopColor={theme === 'light' ? '#f5a623' : '#1a1a1a'} />
+              </radialGradient>
+            </defs>
+            <rect x="13" y="2" width="10" height="3" rx="1" fill={muted} opacity="0.85" />
+            <rect x="12" y="5" width="12" height="2" fill={muted} opacity="0.7" />
+            <rect x="12" y="8" width="12" height="2" fill={muted} opacity="0.7" />
+            <rect x="13" y="11" width="10" height="3" rx="1" fill={muted} opacity="0.85" />
+            <path
+              d="M 11 14 Q 11 18 14 22 Q 18 28 18 34 Q 18 38 14 38 L 22 38 Q 18 38 18 34 Q 18 28 22 22 Q 25 18 25 14 Z"
+              fill="url(#bulbGlow)"
+              stroke={theme === 'light' ? '#ffe680' : '#444'}
+              strokeWidth="0.5"
+            />
+            <path
+              d="M 14 24 Q 15 22 16 24 Q 17 26 18 24 Q 19 22 20 24 Q 21 26 22 24"
+              fill="none"
+              stroke={theme === 'light' ? '#fff8d0' : '#666'}
+              strokeWidth="0.8"
+              opacity={theme === 'light' ? 1 : 0.7}
+            />
+            {theme === 'light' && (
+              <ellipse cx="14" cy="20" rx="2" ry="3.5" fill="#fffbe6" opacity="0.65" />
+            )}
+          </svg>
+        </button>
+      </div>
+    );
+  };
+
+  window.VarA = VarA;
+  </script>
+
+  <!-- ─── App Entry Point ───────────────────────────────────────── -->
+  <script type="text/babel" data-presets="react">
+  const DEFAULT_TWEAKS = {
+    palette: 'cool',
+    fonts: 'classic',
+    bg: 'stars',
+    cardStyle: 'bordered',
+    density: 'normal',
+    chatPos: 'bottom',
+  };
+
+  const App = window.VarA;
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    <App data={window.PORTFOLIO_DATA} tweaks={DEFAULT_TWEAKS} />
+  );
+  </script>
+</body>
 </html>
