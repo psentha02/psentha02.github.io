@@ -326,7 +326,7 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
       },
       light: {
         warm: { bg: '#f5efe4', surface: '#fffaf0', border: '#e0d6c4', accent: '#b8843a', muted: '#7a6e5a', fg: '#1a1612', soft: '#2a2418', softer: '#3a3328' },
-        cool: { bg: '#eef1f6', surface: '#fbfcff', border: '#d6dde8', accent: '#3a6cb8', muted: '#5a6878', fg: '#0f1420', soft: '#1f2530', softer: '#2f3540' },
+        cool: { bg: '#f0f5ff', surface: '#ffffff', border: '#dde8f8', accent: '#2563eb', muted: '#6b82a8', fg: '#0f1728', soft: '#1e2d4a', softer: '#374151' },
         plum: { bg: '#f4eef2', surface: '#fff8fc', border: '#e4d6dc', accent: '#a83a7a', muted: '#7a5a6e', fg: '#1c1118', soft: '#2c1f28', softer: '#3c2f38' },
       },
     };
@@ -499,9 +499,9 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
                     borderRadius: isUser ? '18px 18px 4px 18px' : '4px 18px 18px 18px',
                     fontSize: 15, lineHeight: 1.75,
                     background: isUser
-                      ? (palette.theme === 'dark' ? 'rgba(255,255,255,0.09)' : palette.surface)
-                      : (palette.theme === 'dark' ? 'rgba(255,255,255,0.05)' : palette.bg),
-                    border: `1px solid ${palette.theme === 'dark' ? (isUser ? 'rgba(255,255,255,0.14)' : 'rgba(255,255,255,0.08)') : palette.border}`,
+                      ? (palette.theme === 'dark' ? palette.border : `${palette.accent}18`)
+                      : palette.surface,
+                    border: `1px solid ${palette.border}`,
                     color: palette.fg,
                   }}>
                     {m.pending ? <TypingDots accent={palette.muted} /> : <BubbleContent content={m.content} accent={palette.accent} />}
