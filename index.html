@@ -134,6 +134,13 @@
         description: "PowerShell + Python collection workflows orchestrated through Azure DevOps CI/CD with distributed low-latency ingestion VMs, validation checks, and automated alerting.",
         stack: ["PowerShell", "Python", "Azure DevOps", "Grafana"],
       },
+      {
+        name: "Agent Workflow Runner",
+        tagline: "Kubernetes-native AI task platform running multi-step LangGraph agents as isolated Jobs",
+        url: "github.com/psentha02/agent-workflow-runner",
+        description: "Distributed AI task platform built from scratch on Kubernetes. Clients submit tasks over HTTP and the system dynamically provisions isolated Kubernetes Jobs that run Claude-powered LangGraph agents — each with its own resource limits, failure domain, and lifecycle. The agent reasons in multiple steps: planning, optional web search, synthesis, and a structured answer with a full reasoning trace. Packaged as a Helm chart and instrumented with Prometheus metrics on Grafana dashboards.",
+        stack: ["Kubernetes", "Helm", "FastAPI", "Python", "Redis", "LangGraph", "Anthropic", "Prometheus", "Grafana", "Docker"],
+      },
     ],
 
     skills: {
