@@ -981,10 +981,22 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
       <line x1="6" y1="37" x2="38" y2="37" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5"/>
     </svg>
   );
+  const ProjIcon3 = () => (
+    <svg viewBox="0 0 44 44" width="44" height="44" fill="none">
+      <circle cx="22" cy="22" r="5" stroke="rgba(255,255,255,0.9)" strokeWidth="1.8"/>
+      <circle cx="22" cy="8"  r="3.5" stroke="rgba(255,255,255,0.9)" strokeWidth="1.6"/>
+      <circle cx="35" cy="29" r="3.5" stroke="rgba(255,255,255,0.9)" strokeWidth="1.6"/>
+      <circle cx="9"  cy="29" r="3.5" stroke="rgba(255,255,255,0.9)" strokeWidth="1.6"/>
+      <line x1="22" y1="17" x2="22" y2="11.5" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5"/>
+      <line x1="26.3" y1="24.3" x2="31.7" y2="27.1" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5"/>
+      <line x1="17.7" y1="24.3" x2="12.3" y2="27.1" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5"/>
+    </svg>
+  );
   const PROJ_META = [
     { gradient: 'linear-gradient(135deg, #0c2d6b 0%, #1d55c8 100%)', Icon: ProjIcon0 },
     { gradient: 'linear-gradient(135deg, #0a3329 0%, #0e7c6a 100%)', Icon: ProjIcon1 },
     { gradient: 'linear-gradient(135deg, #251540 0%, #6d28d9 100%)', Icon: ProjIcon2 },
+    { gradient: 'linear-gradient(135deg, #7c2d12 0%, #ea580c 100%)', Icon: ProjIcon3 },
   ];
 
   const ProjectDetailView = ({ project, meta, palette, fonts, onBack }) => {
