@@ -51,17 +51,16 @@
     about: {
       short: "Bridging systems and intelligence.",
       paragraphs: [
-        "I sit at the intersection where infrastructure ends and AI begins. At Qualcomm, I own the complete lifecycle of production servers across 20+ global data centers — from validating firmware on a freshly racked machine to building the LangChain agent that lets directors query the entire fleet in plain English. Most engineers live on one side of that line. I work both.",
-        "My flagship project is a text-to-SQL agent — LangChain, Anthropic, FAISS — that reduced root-cause analysis time by 90% in a production environment. Not a side project: a system real directors use every day to interrogate 5,000+ ESXi hosts, backed by telemetry pipelines I built to ingest 100K+ rows every 30 minutes.",
-        "I'm formalizing the theory at Georgia Tech's OMSCS (AI specialization) while staying heads-down at Qualcomm. Outside of work I built Hunch, a peer-to-peer prediction market, because I build things for fun. Eagle Scout, varsity tennis captain — I know how to commit and see things through.",
+        "Hey, I'm Praveen. I'm an infrastructure engineer at Qualcomm from the Bay Area, currently based in San Diego. Aside from Cloud Infrastructure, my interests include Agentic AI, MLOps, and Cybersecurity to name a few. I'm passionate about building systems that have a real impact, learning new skills, and solving problems in new areas.",
+        "When I'm not automating systems or building agents, I'm an athlete, food enthusiast, and traveller.",
       ],
       currently: [
         "Studying AI & ML theory — Georgia Tech OMSCS",
         "Shipping production infrastructure tooling at Qualcomm",
-        "Exploring agentic systems, LLM reasoning, and distributed AI workloads",
+        "Built Agent Workflow Runner — a Kubernetes-native platform for running LangGraph agents as isolated Jobs",
         "Built this portfolio's AI chat (PravGPT) — ask it anything",
       ],
-      interests: ["Distributed Systems", "LLM Agents & RAG", "Infrastructure Automation", "Observability", "Prediction Markets", "Tennis", "Scouting & Leadership"],
+      interests: ["Distributed Systems", "LLM Agents & RAG", "Cloud Infrastructure", "Observability", "Prediction Markets", "MLOps", "Algorithmic Trading", "Cybersecurity"],
     },
 
     education: [
@@ -140,6 +139,7 @@
         url: "github.com/psentha02/agent-workflow-runner",
         description: "Distributed AI task platform built from scratch on Kubernetes. Clients submit tasks over HTTP and the system dynamically provisions isolated Kubernetes Jobs that run Claude-powered LangGraph agents — each with its own resource limits, failure domain, and lifecycle. The agent reasons in multiple steps: planning, optional web search, synthesis, and a structured answer with a full reasoning trace. Packaged as a Helm chart and instrumented with Prometheus metrics on Grafana dashboards.",
         stack: ["Kubernetes", "Helm", "FastAPI", "Python", "Redis", "LangGraph", "Anthropic", "Prometheus", "Grafana", "Docker"],
+        architectureImage: './agent_workflow_architecture.svg',
       },
     ],
 
@@ -163,7 +163,7 @@
 
     starters: [
       "What does Praveen do at Qualcomm?",
-      "Tell me about the text-to-SQL agent",
+      "Tell me about the Agent Workflow Runner",
       "What's his tech stack?",
       "Is he open to new opportunities?",
       "What's Hunch?",
@@ -436,18 +436,6 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
                 <CardIcon><PersonIcon /></CardIcon>
                 <CardTitle font={fonts.display}>About</CardTitle>
                 <CardSub muted={palette.muted}>A bit about myself.</CardSub>
-                <img
-                  src="./Sentha_Family_2.jpg"
-                  alt="Praveen Sentha"
-                  style={{
-                    position: 'absolute', right: 0, top: 0, bottom: 0,
-                    width: '52%', height: '100%',
-                    objectFit: 'cover', objectPosition: 'center 20%',
-                    maskImage: 'linear-gradient(to right, transparent 0%, black 38%)',
-                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 38%)',
-                    pointerEvents: 'none',
-                  }}
-                />
               </Card>
               <Card style={cardStyleBase} accent={palette.accent} muted={palette.muted} border={palette.border}
                 onClick={() => setPage('work')} active={page === 'work'}>
@@ -874,7 +862,22 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
   const AboutDetail = ({ data, palette, fonts }) => (
     <div style={{ WebkitFontSmoothing: 'antialiased', marginTop: 32 }}>
 
-      <SectionH font={fonts.display}>About Me</SectionH>
+      <div style={{ position: 'relative' }}>
+        <img
+          src="./Sentha_Family_2.jpg"
+          alt="Praveen Sentha"
+          style={{
+            position: 'absolute',
+            left: -190,
+            top: -12,
+            width: 170, height: 170, borderRadius: '50%',
+            objectFit: 'cover', objectPosition: 'center 20%',
+            border: `3px solid ${palette.border}`,
+            boxShadow: '0 4px 24px rgba(0,0,0,0.4)',
+          }}
+        />
+        <SectionH font={fonts.display}>About Me</SectionH>
+      </div>
 
       {(data.about.paragraphs || []).map((p, i) => (
         <p key={i} style={{ fontSize: 16, lineHeight: 1.78, color: palette.fg, opacity: 0.85, margin: '0 0 18px' }}>{p}</p>
@@ -907,7 +910,7 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
       <AboutSectionLabel palette={palette}>Interests</AboutSectionLabel>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
         {(data.about.interests || []).map((item, i) => (
-          <span key={i} style={{ fontSize: 13, padding: '6px 14px', borderRadius: 999, background: palette.surface, border: `1px solid ${palette.border}`, color: palette.softer }}>{item}</span>
+          <span key={i} style={{ fontSize: 14, padding: '7px 16px', borderRadius: 999, background: palette.surface, border: `1px solid ${palette.border}`, color: palette.softer }}>{item}</span>
         ))}
       </div>
 
@@ -917,7 +920,7 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
           <div style={{ fontSize: 12, color: palette.accent, marginBottom: 8, fontWeight: 600 }}>{k}</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
             {v.map((s, i) => (
-              <span key={i} style={{ fontSize: 12, padding: '4px 10px', borderRadius: 999, background: palette.bg, border: `1px solid ${palette.border}`, color: palette.softer }}>{s}</span>
+              <span key={i} style={{ fontSize: 14, padding: '7px 16px', borderRadius: 999, background: palette.bg, border: `1px solid ${palette.border}`, color: palette.softer }}>{s}</span>
             ))}
           </div>
         </div>
@@ -1001,6 +1004,7 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
 
   const ProjectDetailView = ({ project, meta, palette, fonts, onBack }) => {
     const { Icon } = meta;
+    const [lightbox, setLightbox] = React.useState(false);
     return (
       <div style={{ WebkitFontSmoothing: 'antialiased', animation: 'projIn 480ms cubic-bezier(0.16, 1, 0.3, 1) both' }}>
         <style>{`@keyframes projIn { from { opacity: 0; transform: translateY(20px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }`}</style>
@@ -1036,13 +1040,53 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
               {project.stack.map((s, j) => (
                 <span key={j} style={{
-                  fontSize: 12, padding: '5px 12px', borderRadius: 999, fontWeight: 500,
+                  fontSize: 14, padding: '7px 16px', borderRadius: 999, fontWeight: 500,
                   background: `${palette.accent}20`, border: `1px solid ${palette.accent}45`, color: palette.accent,
                 }}>{s}</span>
               ))}
             </div>
           </div>
         </div>
+        {project.architectureImage && (
+          <div style={{ marginTop: 48 }}>
+            <img
+              src={project.architectureImage}
+              alt="Project architecture diagram"
+              onClick={() => setLightbox(true)}
+              style={{
+                width: '100%', borderRadius: 16,
+                border: `1px solid ${palette.border}`,
+                background: '#fff',
+                cursor: 'zoom-in',
+              }}
+            />
+            <p style={{ fontSize: 13, color: palette.muted, textAlign: 'center', marginTop: 10 }}>
+              Project architecture — click to enlarge
+            </p>
+          </div>
+        )}
+        {lightbox && (
+          <div
+            onClick={() => setLightbox(false)}
+            style={{
+              position: 'fixed', inset: 0, zIndex: 1000,
+              background: 'rgba(0,0,0,0.88)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              padding: 32, cursor: 'zoom-out',
+              animation: 'fadeIn 150ms ease',
+            }}
+          >
+            <img
+              src={project.architectureImage}
+              alt="Project architecture diagram"
+              style={{
+                maxWidth: '100%', maxHeight: '100%',
+                borderRadius: 16, background: '#fff',
+                boxShadow: '0 24px 80px rgba(0,0,0,0.6)',
+              }}
+            />
+          </div>
+        )}
       </div>
     );
   };
