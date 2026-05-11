@@ -14,24 +14,17 @@ Data Science and a Certificate in Entrepreneurship & Innovation.
 He is a U.S. Citizen and does not require visa sponsorship.
 
 ## In His Own Words (About Section)
-"I sit at the intersection where infrastructure ends and AI begins. At Qualcomm, I own the
-complete lifecycle of production servers across 20+ global data centers — from validating firmware
-on a freshly racked machine to building the LangChain agent that lets directors query the entire
-fleet in plain English. Most engineers live on one side of that line. I work both.
+"Hey, I'm Praveen. I'm an infrastructure engineer at Qualcomm from the Bay Area, currently based
+in San Diego. Aside from Cloud Infrastructure, my interests include Agentic AI, MLOps, and
+Cybersecurity to name a few. I'm passionate about building systems that have a real impact,
+learning new skills, and solving problems in new areas.
 
-My flagship project is a text-to-SQL agent — LangChain, Anthropic, FAISS — that reduced
-root-cause analysis time by 90% in a production environment. Not a side project: a system real
-directors use every day to interrogate 5,000+ ESXi hosts, backed by telemetry pipelines I built
-to ingest 100K+ rows every 30 minutes.
-
-I'm formalizing the theory at Georgia Tech's OMSCS (AI specialization) while staying heads-down
-at Qualcomm. Outside of work I built Hunch, a peer-to-peer prediction market, because I build
-things for fun. Eagle Scout, varsity tennis captain — I know how to commit and see things through."
+When I'm not automating systems or building agents, I'm an athlete, food enthusiast, and traveller."
 
 ## Currently
 - Studying AI & ML theory at Georgia Tech OMSCS
 - Shipping production infrastructure tooling at Qualcomm
-- Exploring agentic systems, LLM reasoning, and distributed AI workloads
+- Built Agent Workflow Runner — a Kubernetes-native platform for running LangGraph agents as isolated Jobs
 - Built this portfolio's AI chat (PravGPT) using Cloudflare Workers + Groq
 
 ## Contact
@@ -51,8 +44,8 @@ their AI teams.
 He shipped a production LLM agent at Qualcomm that real directors use daily — not a proof of
 concept. The agent writes SQL, executes it, and returns answers about a global server fleet.
 
-Interests: Distributed Systems, LLM Agents & RAG, Infrastructure Automation, Observability,
-Prediction Markets, Tennis, Scouting & Leadership.
+Interests: Distributed Systems, LLM Agents & RAG, Cloud Infrastructure, Observability,
+Prediction Markets, MLOps, Algorithmic Trading, Cybersecurity.
 Honors: Eagle Scout, Varsity Tennis Captain, Azure Fundamentals certified.
 
 ---
@@ -120,6 +113,16 @@ Stack: PowerShell, Python, Azure DevOps, Grafana, Prometheus | Production at Qua
 100,000+ rows every 30 minutes from servers across 20+ global data centers. Distributed
 low-latency ingestion VMs, validation checks, automated alerting, and Grafana dashboards
 used by Qualcomm leadership for infrastructure investment decisions.
+
+### Agent Workflow Runner
+Stack: Kubernetes, Helm, FastAPI, Python, Redis, LangGraph, Anthropic Claude, Prometheus, Grafana, Docker
+GitHub: github.com/psentha02/agent-workflow-runner
+
+A Kubernetes-native AI task platform built from scratch. Clients submit tasks over HTTP and the
+system dynamically provisions isolated Kubernetes Jobs that run Claude-powered LangGraph agents —
+each with its own resource limits, failure domain, and lifecycle. The agent reasons in multiple
+steps: planning, optional web search, synthesis, and a structured answer with a full reasoning
+trace. Packaged as a Helm chart and instrumented with Prometheus metrics on Grafana dashboards.
 
 ---
 
