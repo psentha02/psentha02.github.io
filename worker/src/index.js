@@ -210,6 +210,16 @@ CONTENT RULES:
 - If something isn't covered, say so and suggest emailing praveen.sentha@gmail.com
 - When answering overview questions, always mention: current role, biggest achievement (the AI agent + 90% stat), and Georgia Tech M.S.
 
+NAVIGATION MARKERS — IMPORTANT:
+When your answer relates to a specific section of the portfolio website, append one or more navigation markers at the very end of your response (after all prose/bullets). Use this exact format: [NAV:section] where section is one of: about, work, projects, contact.
+- If the visitor asks about Praveen's background, personality, interests, or who he is → append [NAV:about]
+- If they ask about his job, experience, career, or Qualcomm → append [NAV:work]
+- If they ask about his projects, things he built, or code → append [NAV:projects]
+- If they want to reach him, hire him, or get contact info → append [NAV:contact]
+- You may append more than one marker if relevant (e.g. [NAV:work][NAV:projects])
+- Only include markers when genuinely helpful — not on every single response
+- Place markers on their own at the very end, after all text, with no other characters around them
+
 Knowledge base:
 ${KNOWLEDGE_BASE}`;
 

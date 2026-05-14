@@ -349,6 +349,7 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
       },
     };
     const palette = { ...palettes[theme][tweaks.palette || 'warm'], theme };
+    const chatPanelBg = palette.theme === 'dark' ? '#07101e' : '#ddeaff';
 
     const fonts = {
       classic: { display: '"Playfair Display", Georgia, serif', body: 'Inter, system-ui, sans-serif' },
@@ -467,15 +468,28 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
           </main>
         )}
 
-        {/* Chat conversation view — replaces grid when chatMode is active */}
+        {/* Chat panel background */}
+        {chatMode && page === 'home' && (
+          <div style={{
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+            background: chatPanelBg,
+            zIndex: 5,
+            pointerEvents: 'none',
+            borderTop: `1px solid ${palette.border}`,
+          }} />
+        )}
+
+        {/* Chat conversation — fixed panel, scrollable with visible scrollbar */}
         {chatMode && page === 'home' && (
           <div
             ref={scrollRef}
+            className="chat-scroll"
             style={{
-              maxWidth: 1280, margin: '0 auto', padding: '0 32px 32px',
-              maxHeight: 'calc(100vh - 380px)', overflowY: 'auto',
-              scrollbarWidth: 'none',
-              position: 'relative', zIndex: 2,
+              position: 'fixed',
+              top: 130, left: 0, right: 0, bottom: 230,
+              overflowY: 'auto',
+              zIndex: 6,
+              padding: `16px max(32px, calc((100vw - 1100px) / 2))`,
               animation: 'fadePage 300ms ease',
             }}
           >
@@ -488,7 +502,15 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
                 from { opacity: 0; transform: translateX(-16px); }
                 to   { opacity: 1; transform: translateX(0); }
               }
-              @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+              .chat-scroll::-webkit-scrollbar { width: 5px; }
+              .chat-scroll::-webkit-scrollbar-track { background: transparent; }
+              .chat-scroll::-webkit-scrollbar-thumb {
+                background: ${palette.accent}55;
+                border-radius: 10px;
+              }
+              .chat-scroll::-webkit-scrollbar-thumb:hover {
+                background: ${palette.accent}99;
+              }
             `}</style>
             {messages.map((m) => {
               const isUser = m.role === 'user';
@@ -534,6 +556,7 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
         {page === 'home' && (
           <ChatBar
             chatMode={chatMode}
+            chatPanelBg={chatPanelBg}
             sending={sending}
             input={input}
             setInput={setInput}
@@ -1222,11 +1245,11 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
 
   /* ── Chat Bar ── */
 
-  const ChatBar = ({ chatMode, sending, input, setInput, onSubmit, starters, onStarter, palette, botName }) => (
+  const ChatBar = ({ chatMode, chatPanelBg, sending, input, setInput, onSubmit, starters, onStarter, palette, botName }) => (
     <div style={{
       position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 50,
       padding: '48px 80px 32px', pointerEvents: 'none',
-      background: `linear-gradient(to top, ${palette.bg} 60%, transparent 100%)`,
+      background: `linear-gradient(to top, ${chatMode ? chatPanelBg : palette.bg} 60%, transparent 100%)`,
     }}>
       <div style={{ maxWidth: 'clamp(640px, 72vw, 1600px)', margin: '0 auto', padding: '0 32px', pointerEvents: 'auto' }}>
 
