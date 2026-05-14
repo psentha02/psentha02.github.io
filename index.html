@@ -179,8 +179,6 @@ Tone: casual but polite, informative, concise. Speak in first person ABOUT Prave
 
 If asked something not covered by the data below, say you don't have that info and suggest reaching out via the contact card. Don't make things up.
 
-Navigation: When your answer relates to a specific section of the site that the visitor might want to explore, append one or more navigation markers at the very end of your response using this exact format: [NAV:section] where section is one of: about, work, projects, contact. Examples: if someone asks about his experience or job, append [NAV:work]. If they ask about his projects, append [NAV:projects]. If they ask about who he is or his background, append [NAV:about]. If they want to reach him, append [NAV:contact]. Only include a NAV marker when it adds genuine value — do not include one in every response.
-
 === DATA ABOUT PRAVEEN ===
 ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
 `;
@@ -349,7 +347,6 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
       },
     };
     const palette = { ...palettes[theme][tweaks.palette || 'warm'], theme };
-    const chatPanelBg = palette.theme === 'dark' ? '#07101e' : '#ddeaff';
 
     const fonts = {
       classic: { display: '"Playfair Display", Georgia, serif', body: 'Inter, system-ui, sans-serif' },
@@ -468,28 +465,27 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
           </main>
         )}
 
-        {/* Chat panel background */}
-        {chatMode && page === 'home' && (
-          <div style={{
-            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-            background: chatPanelBg,
-            zIndex: 5,
-            pointerEvents: 'none',
-            borderTop: `1px solid ${palette.border}`,
-          }} />
+        {/* Sidebar — visible on detail pages and in chat mode */}
+        {(page !== 'home' || chatMode) && (
+          <Sidebar
+            active={chatMode && page === 'home' ? 'chat' : page}
+            onNavigate={(p) => { if (chatMode) exitChat(); setPage(p); }}
+            onChatExit={exitChat}
+            chatMode={chatMode}
+            palette={palette}
+          />
         )}
 
-        {/* Chat conversation — fixed panel, scrollable with visible scrollbar */}
+        {/* Chat conversation view */}
         {chatMode && page === 'home' && (
           <div
             ref={scrollRef}
-            className="chat-scroll"
             style={{
-              position: 'fixed',
-              top: 130, left: 0, right: 0, bottom: 230,
-              overflowY: 'auto',
-              zIndex: 6,
-              padding: `16px max(32px, calc((100vw - 1100px) / 2))`,
+              maxWidth: 1280, margin: '0 auto', padding: '0 32px 32px',
+              maxHeight: 'calc(100vh - 380px)', overflowY: 'auto',
+              scrollbarWidth: 'thin',
+              scrollbarColor: `${palette.accent}55 transparent`,
+              position: 'relative', zIndex: 2,
               animation: 'fadePage 300ms ease',
             }}
           >
@@ -502,15 +498,7 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
                 from { opacity: 0; transform: translateX(-16px); }
                 to   { opacity: 1; transform: translateX(0); }
               }
-              .chat-scroll::-webkit-scrollbar { width: 5px; }
-              .chat-scroll::-webkit-scrollbar-track { background: transparent; }
-              .chat-scroll::-webkit-scrollbar-thumb {
-                background: ${palette.accent}55;
-                border-radius: 10px;
-              }
-              .chat-scroll::-webkit-scrollbar-thumb:hover {
-                background: ${palette.accent}99;
-              }
+              @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
             `}</style>
             {messages.map((m) => {
               const isUser = m.role === 'user';
@@ -532,7 +520,7 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
                     border: `1px solid ${palette.border}`,
                     color: palette.fg,
                   }}>
-                    {m.pending ? <TypingDots accent={palette.muted} /> : <BubbleContent content={m.content} accent={palette.accent} onNavigate={setPage} />}
+                    {m.pending ? <TypingDots accent={palette.muted} /> : <BubbleContent content={m.content} accent={palette.accent} />}
                   </div>
                 </div>
               );
@@ -556,7 +544,6 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
         {page === 'home' && (
           <ChatBar
             chatMode={chatMode}
-            chatPanelBg={chatPanelBg}
             sending={sending}
             input={input}
             setInput={setInput}
@@ -812,11 +799,14 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
     if (kind === 'folder') return <svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>;
     if (kind === 'briefcase') return <svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg>;
     if (kind === 'send') return <svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="m3 11 18-8-8 18-2-8-8-2z"/></svg>;
+    if (kind === 'chat') return <svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>;
     return null;
   };
 
-  const Sidebar = ({ active, onNavigate, palette }) => {
+  const Sidebar = ({ active, onNavigate, onChatExit, chatMode, palette }) => {
     const [hovered, setHovered] = React.useState(null);
+    const isChatActive = active === 'chat';
+    const isHovChat = hovered === 'chat' && !isChatActive;
     return (
       <nav style={{
         position: 'fixed', left: 24, top: '50%', transform: 'translateY(-50%)',
@@ -848,6 +838,26 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
             </button>
           );
         })}
+        {/* Divider + chat button */}
+        <div style={{ width: 24, height: 1, background: palette.border, margin: '2px auto' }} />
+        <button
+          onClick={onChatExit}
+          onMouseEnter={() => setHovered('chat')}
+          onMouseLeave={() => setHovered(null)}
+          aria-label="Chat" title="Chat"
+          style={{
+            width: 44, height: 44, borderRadius: '50%',
+            background: isChatActive ? palette.accent : isHovChat ? (palette.theme === 'dark' ? 'rgba(255,255,255,0.08)' : `${palette.accent}18`) : 'transparent',
+            color: isChatActive ? palette.bg : isHovChat ? '#fff' : palette.muted,
+            border: 'none', cursor: 'pointer', padding: 0,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            transition: 'background 250ms ease, color 250ms ease, transform 350ms cubic-bezier(0.34, 1.7, 0.64, 1), filter 250ms ease',
+            transform: isHovChat ? 'scale(1.3)' : 'scale(1)',
+            filter: isHovChat ? `drop-shadow(0 0 10px ${palette.accent}90)` : 'none',
+          }}
+        >
+          <div style={{ width: 20, height: 20 }}><NavIcon kind="chat" /></div>
+        </button>
       </nav>
     );
   };
@@ -865,7 +875,6 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
         position: 'absolute', inset: 0, overflowY: 'auto', zIndex: 20,
         animation: 'fadePage 250ms ease',
       }}>
-        <Sidebar active={which} onNavigate={onNavigate} palette={palette} fonts={fonts} />
         <div style={{ maxWidth: 760, margin: '0 auto', padding: '170px 32px 80px' }}>
           {content}
         </div>
@@ -1245,11 +1254,11 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
 
   /* ── Chat Bar ── */
 
-  const ChatBar = ({ chatMode, chatPanelBg, sending, input, setInput, onSubmit, starters, onStarter, palette, botName }) => (
+  const ChatBar = ({ chatMode, sending, input, setInput, onSubmit, starters, onStarter, palette, botName }) => (
     <div style={{
       position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 50,
       padding: '48px 80px 32px', pointerEvents: 'none',
-      background: `linear-gradient(to top, ${chatMode ? chatPanelBg : palette.bg} 60%, transparent 100%)`,
+      background: `linear-gradient(to top, ${palette.bg} 60%, transparent 100%)`,
     }}>
       <div style={{ maxWidth: 'clamp(640px, 72vw, 1600px)', margin: '0 auto', padding: '0 32px', pointerEvents: 'auto' }}>
 
@@ -1327,45 +1336,8 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
     );
   };
 
-  const NAV_META = {
-    about:    { label: 'About',    icon: '👤', desc: 'Background & interests' },
-    work:     { label: 'Work',     icon: '💼', desc: 'Experience & roles' },
-    projects: { label: 'Projects', icon: '📁', desc: 'Things Praveen built' },
-    contact:  { label: 'Contact',  icon: '✉️',  desc: 'Get in touch' },
-  };
-
-  const NavChip = ({ section, onNavigate, accent }) => {
-    const meta = NAV_META[section];
-    if (!meta) return null;
-    const [hov, setHov] = React.useState(false);
-    return (
-      <button
-        onClick={() => onNavigate(section)}
-        onMouseEnter={() => setHov(true)}
-        onMouseLeave={() => setHov(false)}
-        style={{
-          display: 'inline-flex', alignItems: 'center', gap: 10,
-          padding: '8px 14px', borderRadius: 12, cursor: 'pointer',
-          background: hov ? `${accent}22` : `${accent}10`,
-          border: `1px solid ${accent}${hov ? '60' : '35'}`,
-          fontFamily: 'inherit', textAlign: 'left',
-          transition: 'background 150ms, border-color 150ms',
-        }}
-      >
-        <span style={{ fontSize: 16 }}>{meta.icon}</span>
-        <span>
-          <span style={{ fontSize: 13, fontWeight: 600, color: accent, display: 'block' }}>{meta.label}</span>
-          <span style={{ fontSize: 11, color: accent, opacity: 0.7 }}>{meta.desc}</span>
-        </span>
-        <span style={{ marginLeft: 4, color: accent, opacity: 0.6, fontSize: 12 }}>→</span>
-      </button>
-    );
-  };
-
-  const BubbleContent = ({ content, accent, onNavigate }) => {
-    const navMatches = [...content.matchAll(/\[NAV:(\w+)\]/g)];
-    const cleanContent = content.replace(/\[NAV:\w+\]/g, '').trim();
-    const paragraphs = cleanContent.split(/\n\n+/);
+  const BubbleContent = ({ content, accent }) => {
+    const paragraphs = content.trim().split(/\n\n+/);
     return (
       <div>
         {paragraphs.map((para, pi) => {
@@ -1394,13 +1366,6 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
             </p>
           );
         })}
-        {navMatches.length > 0 && onNavigate && (
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 14 }}>
-            {navMatches.map((m, i) => (
-              <NavChip key={i} section={m[1]} onNavigate={onNavigate} accent={accent} />
-            ))}
-          </div>
-        )}
       </div>
     );
   };
