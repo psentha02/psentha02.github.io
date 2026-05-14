@@ -1257,7 +1257,7 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
   const ChatBar = ({ chatMode, sending, input, setInput, onSubmit, starters, onStarter, palette, botName }) => (
     <div style={{
       position: 'fixed', left: 0, right: 0, bottom: 0, zIndex: 50,
-      padding: '48px 80px 32px', pointerEvents: 'none',
+      padding: '60px 80px 36px', pointerEvents: 'none',
       background: `linear-gradient(to top, ${palette.bg} 60%, transparent 100%)`,
     }}>
       <div style={{ maxWidth: 'clamp(640px, 72vw, 1600px)', margin: '0 auto', padding: '0 32px', pointerEvents: 'auto' }}>
@@ -1294,8 +1294,8 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
             background: palette.theme === 'dark' ? 'rgba(255,255,255,0.06)' : palette.surface,
             border: `1px solid ${palette.theme === 'dark' ? 'rgba(255,255,255,0.11)' : palette.border}`,
             borderRadius: 16,
-            padding: '16px 64px 40px 24px',
-            minHeight: 'clamp(100px, 12vh, 180px)',
+            padding: '20px 72px 52px 28px',
+            minHeight: 'clamp(140px, 16vh, 220px)',
             boxShadow: '0 8px 40px rgba(0,0,0,0.5)',
           }}>
             <input
