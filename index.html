@@ -55,10 +55,10 @@
         "When I'm not automating systems or building agents, I'm an athlete, food enthusiast, and traveller.",
       ],
       currently: [
-        "Studying AI & ML theory — Georgia Tech OMSCS",
+        "Studying AI & ML theory at Georgia Tech OMSCS",
         "Shipping production infrastructure tooling at Qualcomm",
-        "Built Agent Workflow Runner — a Kubernetes-native platform for running LangGraph agents as isolated Jobs",
-        "Built this portfolio's AI chat (PravGPT) — ask it anything",
+        "Built Agent Workflow Runner, a Kubernetes-native platform for running LangGraph agents as isolated Jobs",
+        "Built this portfolio's AI chat (PravGPT). Ask it anything.",
       ],
       interests: ["Distributed Systems", "LLM Agents & RAG", "Cloud Infrastructure", "Observability", "Prediction Markets", "MLOps", "Algorithmic Trading", "Cybersecurity"],
     },
@@ -79,11 +79,11 @@
     experience: [
       {
         company: "Qualcomm",
-        title: "Infrastructure Engineer — Server Lifecycle Automation",
+        title: "Infrastructure Engineer, Server Lifecycle Automation",
         location: "San Diego, CA",
         dates: "Feb 2024 – Present",
         highlights: [
-          "Delivered ~100 production servers across 20+ global data centers — owning procurement-to-production lifecycle and validating firmware, BIOS, and out-of-band management for customer-facing engineering workloads.",
+          "Delivered ~100 production servers across 20+ global data centers, owning procurement-to-production lifecycle and validating firmware, BIOS, and out-of-band management for customer-facing engineering workloads.",
           "Built a LangChain + Anthropic LLM + FAISS natural-language text-to-SQL agent with a semantic layer for infrastructure resources, cutting time-to-insight for RCA by ~90%.",
           "Enabled continuous infrastructure telemetry ingestion (~100K+ rows / 30-min cadence) using PowerShell and Python workflows orchestrated through Azure DevOps CI/CD.",
           "Drove director-level capacity planning by designing a structured SQL data model and delivering Grafana dashboards and alerting for CPU, memory, and storage optimization.",
@@ -117,8 +117,8 @@
       {
         name: "Hunch",
         tagline: "Peer-to-peer prediction market platform",
-        url: "hunch-beta.vercel.app",
-        description: "Production-ready P2P prediction market — market creation, predictions, outcome resolution, and fair zero-sum payouts via a refund-based model. Serverless on Next.js + Supabase + Vercel + Google OAuth.",
+        url: "myhunch.app",
+        description: "Production-ready P2P prediction market: market creation, predictions, outcome resolution, and fair zero-sum payouts via a refund-based model. Serverless on Next.js + Supabase + Vercel + Google OAuth.",
         stack: ["Next.js", "Supabase", "PostgreSQL", "Vercel", "OAuth"],
       },
       {
@@ -137,7 +137,7 @@
         name: "Agent Workflow Runner",
         tagline: "Kubernetes-native AI task platform running multi-step LangGraph agents as isolated Jobs",
         url: "github.com/psentha02/agent-workflow-runner",
-        description: "Distributed AI task platform built from scratch on Kubernetes. Clients submit tasks over HTTP and the system dynamically provisions isolated Kubernetes Jobs that run Claude-powered LangGraph agents — each with its own resource limits, failure domain, and lifecycle. The agent reasons in multiple steps: planning, optional web search, synthesis, and a structured answer with a full reasoning trace. Packaged as a Helm chart and instrumented with Prometheus metrics on Grafana dashboards.",
+        description: "Distributed AI task platform built from scratch on Kubernetes. Clients submit tasks over HTTP and the system dynamically provisions isolated Kubernetes Jobs that run Claude-powered LangGraph agents, each with its own resource limits, failure domain, and lifecycle. The agent reasons in multiple steps: planning, optional web search, synthesis, and a structured answer with a full reasoning trace. Packaged as a Helm chart and instrumented with Prometheus metrics on Grafana dashboards.",
         stack: ["Kubernetes", "Helm", "FastAPI", "Python", "Redis", "LangGraph", "Anthropic", "Prometheus", "Grafana", "Docker"],
         architectureImage: './agent_workflow_architecture.svg',
       },
@@ -175,9 +175,11 @@
   <script type="text/babel" data-presets="react">
   const PRAVGPT_SYSTEM_PROMPT = `You are PravGPT, an AI assistant embedded on Praveen Sentha's personal portfolio website. Your job is to answer visitors' questions about Praveen, his work, his projects, and his background.
 
-Tone: casual but polite, informative, concise. Speak in first person ABOUT Praveen (i.e. "Praveen built…" or "He works at Qualcomm…"), never as Praveen. Use plain prose — no markdown headings, no bullet lists unless the visitor explicitly asks for a list. Keep replies under 4 short sentences unless asked for detail.
+Tone: casual but polite, informative, concise. Speak in first person ABOUT Praveen (i.e. "Praveen built…" or "He works at Qualcomm…"), never as Praveen. Use plain prose, no markdown headings, no bullet lists unless the visitor explicitly asks for a list. Keep replies under 4 short sentences unless asked for detail.
 
 If asked something not covered by the data below, say you don't have that info and suggest reaching out via the contact card. Don't make things up.
+
+Navigation: When your answer relates to a specific section of the site that the visitor might want to explore, append one or more navigation markers at the very end of your response using this exact format: [NAV:section] where section is one of: about, work, projects, contact. Examples: if someone asks about his experience or job, append [NAV:work]. If they ask about his projects, append [NAV:projects]. If they ask about who he is or his background, append [NAV:about]. If they want to reach him, append [NAV:contact]. Only include a NAV marker when it adds genuine value — do not include one in every response.
 
 === DATA ABOUT PRAVEEN ===
 ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
@@ -508,7 +510,7 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
                     border: `1px solid ${palette.border}`,
                     color: palette.fg,
                   }}>
-                    {m.pending ? <TypingDots accent={palette.muted} /> : <BubbleContent content={m.content} accent={palette.accent} />}
+                    {m.pending ? <TypingDots accent={palette.muted} /> : <BubbleContent content={m.content} accent={palette.accent} onNavigate={setPage} />}
                   </div>
                 </div>
               );
@@ -1226,7 +1228,7 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
       padding: '48px 80px 32px', pointerEvents: 'none',
       background: `linear-gradient(to top, ${palette.bg} 60%, transparent 100%)`,
     }}>
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px', pointerEvents: 'auto' }}>
+      <div style={{ maxWidth: 'clamp(640px, 72vw, 1600px)', margin: '0 auto', padding: '0 32px', pointerEvents: 'auto' }}>
 
         {/* Label + pills — only on home before any conversation */}
         {!chatMode && (
@@ -1261,7 +1263,7 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
             border: `1px solid ${palette.theme === 'dark' ? 'rgba(255,255,255,0.11)' : palette.border}`,
             borderRadius: 16,
             padding: '16px 64px 40px 24px',
-            minHeight: 120,
+            minHeight: 'clamp(100px, 12vh, 180px)',
             boxShadow: '0 8px 40px rgba(0,0,0,0.5)',
           }}>
             <input
@@ -1302,8 +1304,45 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
     );
   };
 
-  const BubbleContent = ({ content, accent }) => {
-    const paragraphs = content.trim().split(/\n\n+/);
+  const NAV_META = {
+    about:    { label: 'About',    icon: '👤', desc: 'Background & interests' },
+    work:     { label: 'Work',     icon: '💼', desc: 'Experience & roles' },
+    projects: { label: 'Projects', icon: '📁', desc: 'Things Praveen built' },
+    contact:  { label: 'Contact',  icon: '✉️',  desc: 'Get in touch' },
+  };
+
+  const NavChip = ({ section, onNavigate, accent }) => {
+    const meta = NAV_META[section];
+    if (!meta) return null;
+    const [hov, setHov] = React.useState(false);
+    return (
+      <button
+        onClick={() => onNavigate(section)}
+        onMouseEnter={() => setHov(true)}
+        onMouseLeave={() => setHov(false)}
+        style={{
+          display: 'inline-flex', alignItems: 'center', gap: 10,
+          padding: '8px 14px', borderRadius: 12, cursor: 'pointer',
+          background: hov ? `${accent}22` : `${accent}10`,
+          border: `1px solid ${accent}${hov ? '60' : '35'}`,
+          fontFamily: 'inherit', textAlign: 'left',
+          transition: 'background 150ms, border-color 150ms',
+        }}
+      >
+        <span style={{ fontSize: 16 }}>{meta.icon}</span>
+        <span>
+          <span style={{ fontSize: 13, fontWeight: 600, color: accent, display: 'block' }}>{meta.label}</span>
+          <span style={{ fontSize: 11, color: accent, opacity: 0.7 }}>{meta.desc}</span>
+        </span>
+        <span style={{ marginLeft: 4, color: accent, opacity: 0.6, fontSize: 12 }}>→</span>
+      </button>
+    );
+  };
+
+  const BubbleContent = ({ content, accent, onNavigate }) => {
+    const navMatches = [...content.matchAll(/\[NAV:(\w+)\]/g)];
+    const cleanContent = content.replace(/\[NAV:\w+\]/g, '').trim();
+    const paragraphs = cleanContent.split(/\n\n+/);
     return (
       <div>
         {paragraphs.map((para, pi) => {
@@ -1332,6 +1371,13 @@ ${JSON.stringify(window.PORTFOLIO_DATA, null, 2)}
             </p>
           );
         })}
+        {navMatches.length > 0 && onNavigate && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 14 }}>
+            {navMatches.map((m, i) => (
+              <NavChip key={i} section={m[1]} onNavigate={onNavigate} accent={accent} />
+            ))}
+          </div>
+        )}
       </div>
     );
   };
